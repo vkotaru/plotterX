@@ -4,42 +4,41 @@
 
 void TestVariable()
 {
-//	Variable <double> testvar;
+	Variable <double> TestVar;
 	
-/*	double Min = rand();
+	double Min = rand();
 	double Max = rand();
 	double Del = rand();
 
 	printf("Test: Setting the Min value of variable: ");
-	x.SetMin(Min);
+	TestVar.SetMin(Min);
 
-	if (x.GetMin() == Min)
+	if (TestVar.GetMin() == Min)
 		printf("Test passed\n\n");
 	else 
 		printf("Test Failed\n\n");
 
 	printf("Test: Setting the Max value of variable: ");
-	x.SetMax(Max);
+	TestVar.SetMax(Max);
 
-	if (x.GetMax() == Max)
+	if (TestVar.GetMax() == Max)
 		printf("Test passed\n\n");
 	else
 		printf("Test Failed\n\n");
 	
 
 	printf("Test: Setting the Delta of variable: ");
-	x.SetDelta(Del);
+	TestVar.SetDelta(Del);
 
-	if (x.GetDelta() == Del)
+	if (TestVar.GetDelta() == Del)
 		printf("Test passed\n\n");
 	else
 		printf("Test Failed\n\n");
 
 	printf("Test: Testing the number of steps of variables: ");
 
-	if( x.GetNoOfSteps() == ceil((Max - Min)/Del) )
+	if(TestVar.GetNoOfSteps() == ceil((Max - Min)/Del) )
 		printf("Test passed\n\n");
 	else
 		printf("Test Failed\n\n");
-*/
 }

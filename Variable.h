@@ -1,20 +1,85 @@
+#include <math.h>
+
 template <class T>
 class Variable
 {
-	T Min, Max, Delta;
-	int NoOfSteps;
+	T Min = 0, Max = 0, Delta = 0;
+	int NoOfSteps = 0;
+
+	void InitializeToZero()
+	{
+		Min = 0;
+		Max = 0;
+		Delta = 0;
+		NoOfSteps = 0;
+	}
+
+	void ComputeDelta() 
+	{
+		Delta = (GetMax() - GetMin()) / GetNoOfSteps();
+	}
+
+	void ComputeNoOfSteps()
+	{
+		NoOfSteps = int(ceil((GetMax() - GetMin()) / GetDelta()));
+	}
 
 public:
-	Variable();
-	~Variable();
-	
-	const T GetMin() const;
-	const T GetMax() const;
-	const T GetDelta() const;
-	const int GetNoOfSteps();
+	Variable(void)
+	{
+		InitializeToZero();
+	};
 
-	void SetNoOfSteps( const int No_Of_Steps );
-	void SetMin( const T min);
-	void SetMax( const T max);
-	void SetDelta( const T delta );
+	~Variable(void)
+	{
+		InitializeToZero();
+	};
+
+	const T GetMin() const
+	{
+		return Min;
+	};
+
+	const T GetMax() const
+	{
+		return Max;
+	}
+
+	const T GetDelta() const
+	{
+		return Delta;
+	};
+
+	const int GetNoOfSteps() const
+	{
+		return NoOfSteps;
+	};
+
+	void SetMin(const T min)
+	{
+		Min = min;
+	};
+
+	void SetMax(const T max)
+	{
+		Max = max;
+	}
+
+	void SetDelta(const T delta)
+	{
+		if (GetNoOfSteps() != 0)
+			throw "No of steps already set";
+
+		Delta = delta;
+		ComputeNoOfSteps();
+	};
+
+	void SetNoOfSteps(const int No_Of_Steps)
+	{
+		if (GetDelta() != T(0) )
+			throw "Delta already set";
+
+		NoOfSteps = No_Of_Steps;
+		ComputeDelta();
+	};
 };
