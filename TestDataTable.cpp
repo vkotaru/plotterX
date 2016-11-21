@@ -38,8 +38,3 @@ void TestDataTable()
 	else
 		printf("Test Failed\n\n");
 }	
-
-int main()
-{
-	TestDataTable();
-}
