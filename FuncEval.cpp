@@ -16,9 +16,11 @@ void FunctionEval::Evaluate(const Parser parser, const Variable var[], DataTable
 	// Looping over different variables
 	for(int i = 0; i < parser.GetNoOfVariables(); ++i)
 	{
-		// Looping from Min to Max within each variables
-		auto tempXmin = var[i].Min; 
-		for(auto j = var[i].Min; j<=var[i].Max; j+=var[i].GetDelta())
+		// Looping from Min to Max within each variables 
+		for(auto j = var[i].GetMin(); j<=var[i].GetMax(); j+=var[i].GetDelta())
+		{
+			
+		}
 	}
 }
 

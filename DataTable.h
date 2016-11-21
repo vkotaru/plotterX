@@ -1,3 +1,7 @@
+#ifndef __DATA_TABLE_H__
+#define __DATA_TABLE_H__
+
+
 #include<vector>
 
 class DataTable
@@ -22,7 +26,7 @@ public:
 
 
 
-
+#endif
 
 
 

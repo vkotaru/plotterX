@@ -1,3 +1,6 @@
+#ifndef __VARIABLE_H__
+#define __VARIABLE_H__
+
 #include <math.h>
 
 template <class T>
@@ -80,3 +83,6 @@ public:
 		ComputeDelta();
 	};
 };
+
+
+#endif
