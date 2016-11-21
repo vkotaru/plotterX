@@ -3,9 +3,6 @@
 template <class T>
 class Variable
 {
-	T Min = 0, Max = 0, Delta = 0;
-	int NoOfSteps = 0;
-
 	void InitializeToZero()
 	{
 		Min = 0;

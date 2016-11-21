@@ -10,7 +10,7 @@ DataTable::~DataTable()
 	NoOfVariables = 0;
 }
 
-void DataTable::SetNoOfVariable(const int NoOfVar)
+void DataTable::SetNoOfVariables(const int NoOfVar)
 {
 	if (NoOfVar <= 0)
 		throw "Invalid no of variables";

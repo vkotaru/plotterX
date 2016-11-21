@@ -10,7 +10,7 @@ public:
 	DataTable();
 	~DataTable();
 
-	void SetNoOfVariable(const int n);
+	void SetNoOfVariables(const int NoOfVar);
 	const int GetNoOfVariables() const;
 	const int GetNoOfRows() const ;
 
