@@ -4,7 +4,7 @@
 
 void TestDataTable()
 {
-	DataTable FnTable;
+	DataTable<double> FnTable;
 
 	int NoOfVar = 3, i = 0;
 	printf("Test: Setting the no of variables:");
