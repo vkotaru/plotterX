@@ -6,6 +6,9 @@
 template <class T>
 class Variable
 {
+	T Min, Max, Delta;
+	int NoOfSteps;
+public:
 	void InitializeToZero()
 	{
 		Min = 0;
@@ -83,6 +86,4 @@ public:
 		ComputeDelta();
 	};
 };
-
-
 #endif

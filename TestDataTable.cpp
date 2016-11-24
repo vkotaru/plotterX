@@ -8,7 +8,7 @@ void TestDataTable()
 
 	int NoOfVar = 3, i = 0;
 	printf("Test: Setting the no of variables:");
-	FnTable.SetNoOfVariable(NoOfVar);
+	FnTable.SetNoOfVariables(NoOfVar);
 	if (FnTable.GetNoOfVariables() == NoOfVar)
 		printf("Test Passed\n\n");
 	else 
