@@ -1,5 +1,6 @@
 #include "TestDataTable.cpp"
 #include "TestVariable.cpp"
+#include "TestFuncEval.cpp"
 
 int main()
 {
@@ -8,6 +9,9 @@ int main()
 
 	printf("\n\nTesting the Variable\n");
 	TestVariable();
-	
+
+	printf("\n\nTesting the FunctionEval\n");
+	TestFuncEval();
+
 	return 0;
 }

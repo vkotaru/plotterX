@@ -8,7 +8,6 @@ class DataTable
 {
 private:
 	int NoOfVariables;
-	int NoOfRows;
 	std::vector< std::vector<T> > Data;
 
 public:
@@ -66,10 +65,4 @@ public:
 	}
 };
 
-
-
 #endif
-
-
-
-
