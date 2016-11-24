@@ -8,7 +8,7 @@ void TestFuncEval()
 	DataTable <double> TestFnTable;
 	
 	//Varaibles for x, y , t
-	Variable <double> TestVar[3];
+	Variable <double> TestVar[4];
 
 	FunctionEval<double> FnEval;
 	FnEval.DebugModeOn();
@@ -43,6 +43,12 @@ void TestFuncEval()
 	auto lastrow = TestFnTable.GetRowAt(TestFnTable.GetNoOfRows() - 1);
 
 	if (lastrow[3] == 1000.0 && lastrow[2] == 10 && lastrow[1] == 10 && lastrow[0] == 10)
+		printf("Test Passed\n");
+	else
+		printf("Test Failed\n");
+
+	printf("\n\nTest: Check if the Z variable is altered: ");
+	if (TestVar[3].GetMax() == 1000 && TestVar[3].GetMin() == 1)
 		printf("Test Passed\n");
 	else
 		printf("Test Failed\n");

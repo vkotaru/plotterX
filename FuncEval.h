@@ -1,6 +1,7 @@
 #ifndef __FUNC_EVAL_H__
 #define __FUNC_EVAL_H__
 
+#include <math.h>
 #include "Variable.h"
 #include "DataTable.h"
 //#include "Parser.h"
@@ -18,6 +19,20 @@ class FunctionEval
 		row.push_back(y);
 		row.push_back(z);
 		FnTable.AppendRow(row);
+	};
+
+	void UpdateVariableZ(Variable<T> &VarZ, T CurrZ)
+	{
+		if (VarZ.IsVariableAltered())
+		{
+			VarZ.SetMin( CurrZ > VarZ.GetMin()? VarZ.GetMin() : CurrZ );
+			VarZ.SetMax( CurrZ > VarZ.GetMax()? CurrZ : VarZ.GetMax() );
+		}
+		else
+		{
+			VarZ.SetMin(CurrZ);
+			VarZ.SetMax(CurrZ);
+		}
 	};
 
 public:
@@ -51,7 +66,7 @@ public:
 			*/
 	};
 
-	void Evaluate(DataTable<T> &FnTable, const Variable<T> Var[] )//, const Parser &parser)
+	void Evaluate(DataTable<T> &FnTable, Variable<T> Var[] )//, const Parser &parser)
 	{
 		for (auto t = Var[0].GetMin(); t <= Var[0].GetMax(); t += Var[0].GetDelta() ? Var[0].GetDelta(): true )
 		{
@@ -62,10 +77,12 @@ public:
 					T z;
 					if( Debug )
 						z = x*y*t;
+
 /*					else
 						auto z = parser.evaluate(t, x, y);
 */					
 					AddRowToDataTable(t, x, y, z, FnTable);
+					UpdateVariableZ( Var[3], z);
 				}
 			}
 		}

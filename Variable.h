@@ -8,6 +8,8 @@ class Variable
 {
 	T Min, Max, Delta;
 	int NoOfSteps;
+	bool IsAltered;
+
 public:
 	void InitializeToZero()
 	{
@@ -15,6 +17,7 @@ public:
 		Max = 0;
 		Delta = 0;
 		NoOfSteps = 0;
+		IsAltered = false;
 	}
 
 	void ComputeDelta() 
@@ -37,6 +40,11 @@ public:
 	{
 		InitializeToZero();
 	};
+
+	bool IsVariableAltered()
+	{
+		return IsAltered;
+	}
 
 	const T GetMin() const
 	{
@@ -61,11 +69,13 @@ public:
 	void SetMin(const T min)
 	{
 		Min = min;
+		IsAltered = true;
 	};
 
 	void SetMax(const T max)
 	{
 		Max = max;
+		IsAltered = true;
 	}
 
 	void SetDelta(const T delta)
@@ -75,6 +85,7 @@ public:
 
 		Delta = delta;
 		ComputeNoOfSteps();
+		IsAltered = true;
 	};
 
 	void SetNoOfSteps(const int No_Of_Steps)
@@ -84,6 +95,7 @@ public:
 
 		NoOfSteps = No_Of_Steps;
 		ComputeDelta();
+		IsAltered = true;
 	};
 };
 #endif
