@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "DataTable.h"
+#include "Surface.h"
 
 void TestDataTable()
 {

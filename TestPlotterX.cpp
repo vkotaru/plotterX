@@ -2,6 +2,10 @@
 #include "TestVariable.cpp"
 #include "TestFuncEval.cpp"
 
+#include "Surface.h"
+
+Surface<double> surface;
+
 int main()
 {
 	printf("Testing the DataTable\n");
