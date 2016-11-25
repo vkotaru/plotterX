@@ -1,8 +1,8 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "Variable.h"
+#include "TestModules.h"
 
-void TestVariable()
+void TestVariable( TestModules &TestModule )
 {
 	Variable <double> TestVar;
 	
@@ -10,35 +10,19 @@ void TestVariable()
 	double Max = rand();
 	double Del = rand();
 
-	printf("Test: Setting the Min value of variable: ");
+	TestModule.TestMsg("Setting the Min value of variable:");
 	TestVar.SetMin(Min);
+	TestModule.FunctionTest(TestVar.GetMin() == Min);
 
-	if (TestVar.GetMin() == Min)
-		printf("Test passed\n\n");
-	else 
-		printf("Test Failed\n\n");
-
-	printf("Test: Setting the Max value of variable: ");
+	TestModule.TestMsg("Setting the Max value of variable:");
 	TestVar.SetMax(Max);
+	TestModule.FunctionTest(TestVar.GetMax() == Max);
 
-	if (TestVar.GetMax() == Max)
-		printf("Test passed\n\n");
-	else
-		printf("Test Failed\n\n");
-	
-
-	printf("Test: Setting the Delta of variable: ");
+	TestModule.TestMsg("Setting the Delta of variable:");
 	TestVar.SetDelta(Del);
+	TestModule.FunctionTest(TestVar.GetDelta() == Del);
 
-	if (TestVar.GetDelta() == Del)
-		printf("Test passed\n\n");
-	else
-		printf("Test Failed\n\n");
-
-	printf("Test: Testing the number of steps of variables: ");
-
-	if(TestVar.GetNoOfSteps() == ceil((Max - Min)/Del) )
-		printf("Test passed\n\n");
-	else
-		printf("Test Failed\n\n");
+	TestModule.TestMsg("Number of steps of variables:");
+	TestVar.SetDelta(Del);
+	TestModule.FunctionTest(TestVar.GetNoOfSteps() == ceil((Max - Min) / Del));
 }

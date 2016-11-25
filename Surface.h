@@ -1,84 +1,61 @@
 #ifndef __SURFACE_H__
 #define __SURFACE_H__
 
+#include <vector>
 #include "DataTable.h"
 #include "Variable.h"
 
 template <class T>
 class Surface
 {
-private:
-	int NStepsOfT;
-	int NPoints;
+	DataTable<int> TriangleIndices;
+	T time;
 
-	void Initialize()
+	std::vector<int> FormRow(int Index1, int Index2, int Index3)
 	{
-		NStepsOfT = 0;
-		NPoints = 0;
+		std::vector<int> Row;
+		Row.push_back(Index1);
+		Row.push_back(Index2);
+		Row.push_back(Index3);
+
+		return Row;
 	}
 
 public:
-
-	std::vector<DataTable<int> > Index;
-	// std::vector<DataTable<T> > Points;
-	std::vector<T> Time;
-
 	Surface()
 	{
-		Initialize();
-	}
+		time = 0;
+		TriangleIndices.SetNoOfVariables(3);
+	};
 
 	~Surface()
 	{
-		Initialize();
-	}
+		time = 0;
+	};
 
-	void CalculateParams(const Variable<T> Var[])
+	void TriangulatePoints(int StartingIndex, int NoOfDataPoints)
 	{
-		NStepsOfT = Var[0].GetNoOfSteps();
-		NPoints = 1;
-		for (int i(1); i<4; ++i)
+		for (int i = 0; i < NoOfDataPoints; i++)
 		{
-			NPoints*=Var[i].GetNoOfSteps();	
+			TriangleIndices.AppendRow(	FormRow(StartingIndex + i, StartingIndex + i + 1, StartingIndex + i + 2)	);
 		}
 	}
 
-	void CreateSurface(const Variable<T> Var[], const DataTable<T> &FnTable)
+	void SetTime(T Time)
 	{
-
-		CalculateParams(Var);
-
-		
-		for(int i=0; i<NStepsOfT; ++i)
-		{
-
-			DataTable<int> tempIndex;
-			// DataTable<T> tempPoints;
-			tempIndex.SetNoOfVariables(3);	// Index-> 1, 2, 3
-			// tempPoints.SetNoOfVariables(3);	// Points-> x, y, z 
-		
-			// tempPoints = FnTable.ExtractDataFromTable(i*NPoints, (i+1)*NPoints);
-			std::vector<std::vector<int> > tempIndexVector;
-		
-			for(int j=0; j<NPoints-2; ++j)
-			{
-				std::vector<int> ind;
-				ind.push_back(j+i*(NPoints)); ind.push_back(j+1+i*(NPoints)); ind.push_back(j+2+i*(NPoints));
-				tempIndexVector.push_back(ind);
-			}
-			tempIndex.SetDataVector(tempIndexVector);
-
-			Time.push_back(FnTable.GetColumnForRowAt(i*NPoints,0));
-			Index.push_back(tempIndex);
-			// Points.push_back(tempPoints);
-		}
-
+		time = Time;
 	}
 
+	T GetTime()
+	{
+		return time;
+	}
+	
+	std::vector<int> GetSurfaceRow( int RowIndex )
+	{
+		return TriangleIndices.GetRowAt(RowIndex);
+	}
 };
-
-
-
 
 #endif
 

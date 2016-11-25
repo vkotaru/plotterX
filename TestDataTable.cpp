@@ -1,41 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "DataTable.h"
-#include "Surface.h"
+#include "TestModules.h"
 
-void TestDataTable()
+void TestDataTable( TestModules &TestModule )
 {
 	DataTable<double> FnTable;
 
 	int NoOfVar = 3, i = 0;
-	printf("Test: Setting the no of variables:");
-	FnTable.SetNoOfVariables(NoOfVar);
-	if (FnTable.GetNoOfVariables() == NoOfVar)
-		printf("Test Passed\n\n");
-	else 
-		printf("Test Failed\n\n");
 
+	TestModule.TestMsg("Setting the no of variables:");
+	FnTable.SetNoOfVariables(NoOfVar);
+	TestModule.FunctionTest(FnTable.GetNoOfVariables() == NoOfVar);
+	
 	std::vector<double> row;
 	for (i = 0; i < NoOfVar; i++)
 		row.push_back(rand());
 
-	printf("Adding row to DataTable\n");
+	TestModule.TestMsg("Setting the no of variables:");
+	FnTable.SetNoOfVariables(NoOfVar);
+	TestModule.FunctionTest(FnTable.GetNoOfVariables() == NoOfVar);
 
+	TestModule.TestMsg("Adding row to DataTable:");
 	FnTable.AppendRow( row );
-	printf("Test: Is the row added: ");
-	if (FnTable.GetNoOfRows() == 1)
-		printf("Test Passed\n\n");
-	else
-		printf("Test Failed\n\n");
+	TestModule.FunctionTest(FnTable.GetNoOfRows() == 1);
 
-	printf("Test: Is the row added correctly: ");
+	TestModule.TestMsg("Data Consistency:");
 	auto RetrivedRow = FnTable.GetRowAt(0);
 	for (i = 0; i < NoOfVar; i++)
 		if (row[i] != RetrivedRow[i])
 			break;
-
-	if (i == NoOfVar)
-		printf("Test Passed\n\n");
-	else
-		printf("Test Failed\n\n");
+	TestModule.FunctionTest(i == NoOfVar);
 }	

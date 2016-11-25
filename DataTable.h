@@ -64,12 +64,12 @@ public:
 		return Data.at(index);
 	}
 
-	const T GetColumnForRowAt(const int irow, const int icol) const
+	const T GetColumnForRowAt(const int RowIndex, const int ColumnIndex) const
 	{
-		std::vector<T> row = GetRowAt(irow);
-		return row[icol];	
+		std::vector<T> row = GetRowAt(RowIndex);
+		return row[ColumnIndex];	
 	}
-
+/*
 	void SetDataVector(std::vector< std::vector<T> > From)
 	{
 		Data = From;
@@ -81,10 +81,8 @@ public:
 		std::vector< std::vector<T> > ExtractedVector;
 		ExtractedVector.assign(Data.begin()+from,Data.begin()+to);
 		SetDataVector(ExtractedVector);
-		return ExtractedDataTable;
-		
+		return ExtractedDataTable;	
 	}
-
+*/
 };
-
 #endif
