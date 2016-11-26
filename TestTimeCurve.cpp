@@ -18,7 +18,7 @@ void TestTimeCurve(TestModules &TestModule)
 	{
 		std::vector<double> row;
 
-		row.push_back(fmax(3, fmin(4, j)));
+		row.push_back(fmin(3, fmax(2, j)));
 		for (int i = 1; i < NoOfVar; i++)
 			row.push_back(j);
 
@@ -27,6 +27,6 @@ void TestTimeCurve(TestModules &TestModule)
 
 	TestModule.TestMsg("Checking the Time Surfaces:");
 	TestTimeCurve.CalculateTimeSurfaces(TestFnTable);
-	auto row1 = TestTimeCurve.GetSurfaceRow(0, 2);
-	TestModule.FunctionTest(row1[0] == 3 && row1[1] == 3 && row1[2] == 4);
+	auto row1 = TestTimeCurve.GetSurfaceRow(0, 0);
+	TestModule.FunctionTest(row1[0] == 0 && row1[1] == 1 && row1[2] == 2);
 }

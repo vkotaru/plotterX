@@ -3,6 +3,7 @@
 #include "TestFuncEval.cpp"
 #include "TestSurface.cpp"
 #include "TestTimeCurve.cpp"
+#include "TestGraphRenderer.cpp"
 
 #include "TestModules.h"
 
@@ -24,6 +25,9 @@ int main()
 
 	printf("\n\nTesting the Time Curves\n");
 	TestTimeCurve(TestModule);
+
+	printf("\n\nTesting Graph Renderer\n");
+	TestGraphRenderer();
 
 	return 0;
 }
