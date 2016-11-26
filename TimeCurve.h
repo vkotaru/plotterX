@@ -42,7 +42,7 @@ public:
 			int TimeIndex = 0;
 			
 			CurrSurface.SetTime(FnTable.GetColumnForRowAt(i * NoOfDataPointsPerTimeStep, TimeIndex));
-			CurrSurface.TriangulatePoints(i * NoOfDataPointsPerTimeStep, NoOfDataPointsPerTimeStep);
+			CurrSurface.TriangulatePoints(i * NoOfDataPointsPerTimeStep, NoOfDataPointsPerTimeStep - 2);
 			TimeSurfaces.push_back(CurrSurface);
 		}
 	}
