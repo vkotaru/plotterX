@@ -45,10 +45,14 @@ void TestGraphRenderer()
 
 	int NoOfTrianglesPerTime = FnTable.GetNoOfRows() / FnTimeCurve.GetNoOfTimeSteps() - 2;
 
-	FsOpenWindow(0, 0, 800, 600, 0);
+	Camera Cam;
+
+	FsOpenWindow(0, 0, 800, 600, 1);
 	glEnable(GL_DEPTH_TEST);
 
 	float h = 0.0, p = 0.0;
+	Cam.SetPosXYZ(0, 0, 10);
+	Cam.SetEulerAngles(0, 0, 0);
 	int zoom=-10,pan=0;
 	for (;;)
 	{
@@ -59,61 +63,18 @@ void TestGraphRenderer()
 		{
 			break;
 		}
-		if (FSKEY_UP == key)
-		{
-			zoom++;
-		}
-		if (FSKEY_DOWN == key)
-		{
-			zoom--;
-		}
-		if (FSKEY_LEFT == key)
-		{
-			pan++;
-		}
-		if (FSKEY_RIGHT == key)
-		{
-			pan--;
-		}
-		if (FSKEY_D == key)
-		{
-			h--;
-		}
-		if (FSKEY_A == key)
-		{
-			h++;
-		}
-		if (FSKEY_W == key)
-		{
-			p--;
-		}
-		if (FSKEY_S == key)
-		{
-			p++;
-		}
-
+		
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		int wid, hei;
-		FsGetWindowSize(wid, hei);
-
-		double aspect = (double)wid / (double)hei;
-
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluPerspective(60.0, aspect, 0.1, 100.0);
-
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
-		glTranslatef(pan, 0, zoom);
-
-		glRotatef(h, 0, 1, 0);
-		glRotatef(p, 1, 0, 0);
-
+		Cam.ChangeCameraWithInput(key);
+		Cam.SetUpCameraProjection();
+		Cam.SetUpCameraTransformation();
+		
 		data.PlotEquationSurface(FnTable, FnTimeCurve, 0, NoOfTrianglesPerTime);
 		data.DrawAxis(0,0,0,10,10,10);
 
-		glFlush();
+		//glFlush();
+		FsSwapBuffers();
 		FsSleep(25);
 	}
 	FsCloseWindow();
