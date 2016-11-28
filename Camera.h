@@ -1,3 +1,6 @@
+#ifndef __CAMERA_H__
+#define __CAMERA_H__
+
 #include<math.h>
 #include "fssimplewindow.h"
 
@@ -157,3 +160,4 @@ public:
 		vz = -cos(EulerAngP)*cos(EulerAngH);
 	}
 };
+#endif

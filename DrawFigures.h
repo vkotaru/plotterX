@@ -1,3 +1,6 @@
+#ifndef __DRAW_FIGURES_H__
+#define __DRAW_FIGURES_H__
+
 #include "fssimplewindow.h"
 #include "ysglfontdata.h"
 
@@ -82,3 +85,4 @@ public:
 		YsGlDrawFontBitmap6x7(Msg);
 	}
 };
+#endif
