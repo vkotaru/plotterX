@@ -1,3 +1,6 @@
+#ifndef __GRAPH_RENDERER_H__
+#define __GRAPH_RENDERER_H__
+
 #include <vector>
 #include "fssimplewindow.h"
 
@@ -75,3 +78,4 @@ public:
 		DrawFig.WriteMsgAtXYZ(Xmin, Ymin, Zmax, CoordinateMarkings);
 	}
 };
+#endif

@@ -1,7 +1,8 @@
 #ifndef __DATA_TABLE_H__
 #define __DATA_TABLE_H__
 
-#include<vector>
+#include <vector>
+#include "Errors.h"
 
 template <class T>
 class DataTable
@@ -24,7 +25,7 @@ public:
 	void SetNoOfVariables(const int NoOfVar)
 	{
 		if (NoOfVar <= 0)
-			throw "Invalid no of variables";
+			throw Error_DataTable_Invalid_Variable_No;
 
 		NoOfVariables = NoOfVar;
 	}
@@ -42,7 +43,7 @@ public:
 	void AppendRow(const std::vector<T> row)
 	{
 		if (row.size() != NoOfVariables)
-			throw "Invalid number of data values!!!";
+			throw Error_DataTable_Invalid_No_Of_Data_Val;
 
 		Data.push_back(row);
 	}
@@ -50,7 +51,7 @@ public:
 	void SetRowAt(const std::vector<T> row, const int index)
 	{
 		if (index > GetNoOfRows() || index < 0)
-			throw "Invalid Index";
+			throw Error_DataTable_Invalid_Index;
 
 		auto InsertAt = Data.begin() + index;
 		Data.insert(InsertAt, row);
@@ -59,7 +60,7 @@ public:
 	const std::vector<T> GetRowAt(const int index) const
 	{
 		if (index >= GetNoOfRows() || index < 0)
-			throw "Invalid Index";
+			throw Error_DataTable_Invalid_Index;
 
 		return Data.at(index);
 	}

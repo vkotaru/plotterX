@@ -2,6 +2,7 @@
 #define __VARIABLE_H__
 
 #include <math.h>
+#include "Errors.h"
 
 template <class T>
 class Variable
@@ -89,7 +90,7 @@ public:
 	void SetDelta(const T delta)
 	{
 		if (GetNoOfSteps() != 0)
-			throw "No of steps already set";
+			throw Error_Variable_No_Of_Steps_Already_Set;
 
 		Delta = delta;
 		ComputeNoOfSteps();
@@ -99,7 +100,7 @@ public:
 	void SetNoOfSteps(const int No_Of_Steps)
 	{
 		if (GetDelta() != T(0) )
-			throw "Delta already set";
+			throw Error_Variable_Delta_Already_Set;
 
 		NoOfSteps = No_Of_Steps;
 		ComputeDelta();
