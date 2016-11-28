@@ -33,11 +33,15 @@ public:
 		time = 0;
 	};
 
-	void TriangulatePoints(int StartingIndex, int NoOfDataPoints)
+	void TriangulatePoints(const int StartingIndex,const int NoOfSteps_x, const int NoOfSteps_y)
 	{
-		for (int i = 0; i < NoOfDataPoints; i++)
+		for(int i = 0; i<NoOfSteps_x; ++i )
 		{
-			TriangleIndices.AppendRow(	FormRow(StartingIndex + i, StartingIndex + i + 1, StartingIndex + i + 2)	);
+			for(int j = 0; j<NoOfSteps_y; ++i)
+			{
+				TriangleIndices.AppendRow(	FormRow(StartingIndex + i*(NoOfSteps_y) + j , StartingIndex + (i+1)*(NoOfSteps_y) + j, StartingIndex + i*(NoOfSteps_y) + (j+1))	);		
+				TriangleIndices.AppendRow(	FormRow(StartingIndex + (i+1)*(NoOfSteps_y) + j, StartingIndex + (i+1)*(NoOfSteps_y) + (j+1) , StartingIndex + i*(NoOfSteps_y) + (j  +1))	);
+			}
 		}
 	}
 

@@ -7,7 +7,7 @@ template <class T>
 class Variable
 {
 	T Min, Max, Delta;
-	int NoOfSteps;
+	int NoOfSteps, NoOfBlocks;
 	bool IsAltered;
 
 public:
@@ -17,17 +17,20 @@ public:
 		Max = 0;
 		Delta = 0;
 		NoOfSteps = 0;
+		NoOfBlocks = 0;
 		IsAltered = false;
 	}
 
 	void ComputeDelta() 
 	{
-		Delta = (GetMax() - GetMin()) / GetNoOfSteps();
+		Delta = (GetMax() - GetMin()) /(GetNoOfSteps()-1);
+		NoOfBlocks = NoOfSteps-1;
 	}
 
 	void ComputeNoOfSteps()
 	{
-		NoOfSteps = int(ceil((GetMax() - GetMin()) / GetDelta()));
+		NoOfSteps = int(ceil((GetMax() - GetMin()) / GetDelta()))+1;
+		NoOfBlocks = NoOfSteps-1;
 	}
 
 public:
@@ -64,6 +67,11 @@ public:
 	const int GetNoOfSteps() const
 	{
 		return NoOfSteps;
+	};
+
+	const int GetNoOfBlocks() const
+	{
+		return NoOfBlocks;
 	};
 
 	void SetMin(const T min)
