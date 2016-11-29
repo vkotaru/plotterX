@@ -39,7 +39,7 @@ int main()
 		//TestGraphRenderer();
 
 		printf("\n\nTesting Post Parser Renderer\n");
-		TestPostParser();
+		TestModuleintegration();
 	}
 	catch ( int ErrorCode )
 	{

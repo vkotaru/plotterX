@@ -6,7 +6,7 @@
 #include "GraphRenderer.h"
 #include "FuncEval.h"
 
-void TestPostParser()
+void TestModuleintegration()
 {
 	const int NoOfVar = 4;
 	GraphRenderer<double> data;
