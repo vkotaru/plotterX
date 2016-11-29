@@ -34,17 +34,15 @@ public:
 	void CalculateTimeSurfaces(DataTable<T> &FnTable, Variable<T> var[])
 	{
 		int NoOfDataPointsPerTimeStep = FnTable.GetNoOfRows() / NoOfTimeSteps;
-		int NoOfSteps_x = var[1].GetNoOfBlocks();
-		int NoOfSteps_y = var[2].GetNoOfBlocks();
 
 		for (int i = 0; i < NoOfTimeSteps; i++)
 		{
 			Surface<T> CurrSurface;
-
+			
 			int TimeIndex = 0;
 			
 			CurrSurface.SetTime(FnTable.GetColumnForRowAt(i * NoOfDataPointsPerTimeStep, TimeIndex));
-			CurrSurface.TriangulatePoints(i * NoOfDataPointsPerTimeStep, NoOfSteps_x, NoOfSteps_y);
+			CurrSurface.TriangulatePoints(i * NoOfDataPointsPerTimeStep, var[1].GetNoOfSteps(), var[2].GetNoOfSteps());
 			TimeSurfaces.push_back(CurrSurface);
 		}
 	}

@@ -23,6 +23,5 @@ void TestVariable( TestModules &TestModule )
 	TestModule.FunctionTest(TestVar.GetDelta() == Del);
 
 	TestModule.TestMsg("Number of steps of variables:");
-	TestVar.SetDelta(Del);
-	TestModule.FunctionTest(TestVar.GetNoOfSteps() == ceil((Max - Min) / Del));
+	TestModule.FunctionTest(TestVar.GetNoOfSteps() == ceil((Max - Min) / Del) + 1);
 }

@@ -15,6 +15,11 @@ void TestGraphRenderer()
 
 	std::vector<double> row[4];
 
+	Variable <double> var[4];
+
+	var[1].SetNoOfSteps(2);
+	var[2].SetNoOfSteps(2);
+
 	row[0].push_back(0);
 	row[0].push_back(0);
 	row[0].push_back(0);
@@ -22,26 +27,26 @@ void TestGraphRenderer()
 	FnTable.AppendRow(row[0]);
 
 	row[1].push_back(0);
-	row[1].push_back(1);
-	row[1].push_back(1);
 	row[1].push_back(0);
+	row[1].push_back(1);
+	row[1].push_back(1);
 	FnTable.AppendRow(row[1]);
 
 	row[2].push_back(0);
 	row[2].push_back(1);
-	row[2].push_back(-1);
 	row[2].push_back(0);
+	row[2].push_back(2);
 	FnTable.AppendRow(row[2]);
 	
 	row[3].push_back(0);
+	row[3].push_back(1);
+	row[3].push_back(1);
 	row[3].push_back(0);
-	row[3].push_back(0);
-	row[3].push_back(2);
 	FnTable.AppendRow(row[3]);
 
 	TimeCurve<double> FnTimeCurve;
 	FnTimeCurve.SetNoOfTimeSteps(1);
-	FnTimeCurve.CalculateTimeSurfaces(FnTable);
+	FnTimeCurve.CalculateTimeSurfaces(FnTable, var);
 
 	int NoOfTrianglesPerTime = FnTable.GetNoOfRows() / FnTimeCurve.GetNoOfTimeSteps() - 2;
 

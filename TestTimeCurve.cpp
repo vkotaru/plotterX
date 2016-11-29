@@ -11,9 +11,15 @@ void TestTimeCurve(TestModules &TestModule)
 	TestModule.FunctionTest(TestTimeCurve.GetNoOfTimeSteps() == 2);
 
 	DataTable<double> TestFnTable;
-	int NoOfVar = 4, NoOfRow = 6;
+	const int NoOfVar = 4;
+	int NoOfRow = 12;
+
 	TestFnTable.SetNoOfVariables(NoOfVar);
+
 	Variable <double> var[NoOfVar];
+
+	var[1].SetNoOfSteps( 3 );
+	var[2].SetNoOfSteps( 2 );
 
 	for (int j = 0; j < NoOfRow; j++)
 	{
@@ -25,6 +31,7 @@ void TestTimeCurve(TestModules &TestModule)
 
 		TestFnTable.AppendRow(row);
 	}
+
 
 	TestModule.TestMsg("Checking the Time Surfaces:");
 	TestTimeCurve.CalculateTimeSurfaces(TestFnTable, var);

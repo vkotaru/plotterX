@@ -3,7 +3,7 @@
 #include "TestFuncEval.cpp"
 #include "TestSurface.cpp"
 #include "TestTimeCurve.cpp"
-// #include "TestGraphRenderer.cpp"
+ #include "TestGraphRenderer.cpp"
 
 #include "TestModules.h"
 #include "Errors.h"
