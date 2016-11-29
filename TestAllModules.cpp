@@ -65,7 +65,7 @@ void TestModuleintegration()
 		Cam.SetUpCameraProjection();
 		Cam.SetUpCameraTransformation();
 
-		data.PlotEquationSurface(FnTable, FnTimeCurve, 0, NoOfTrianglesPerTime);
+		data.PlotFunction(FnTable, FnTimeCurve, 0, NoOfTrianglesPerTime, 4);
 		data.DrawAxis(0, 0, 0, 10, 10, 10);
 	
 		FsSwapBuffers();

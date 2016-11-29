@@ -10,22 +10,14 @@ class GraphRenderer
 	DrawFigures<T> DrawFig;
 	Color FigColor;
 
-public:
-	void PlotEquation(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfTriangles, int NoOfVariables)
-	{
-		if (NoOfVariables == 3)
-			PlotEqationLine(FnTable, FnTimeCurve, TimeIndex, NoOfTriangles);
-		else
-			PlotEquationSurface(FnTable, FnTimeCurve, TimeIndex, NoOfTriangles);
-	}
-
 	void PlotEqationLine(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfTriangles)
 	{
 		for (int k = 0; k < NoOfTriangles; k++)
 		{
 			PlotLines(FnTable, FnTimeCurve.GetSurfaceRow(TimeIndex, k));
 		}
-	}
+	};
+
 	void PlotEquationSurface(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfTriangles)
 	{
 		for (int k = 0; k < NoOfTriangles; k++)
@@ -69,6 +61,7 @@ public:
 			GL_TRIANGLES
 		);
 	};
+
 	void PlotLines(DataTable<T> &FnTable, std::vector<int> TableIndex)
 	{
 		FigColor.SetAndChangeColor(0, 0, 255, 255);
@@ -80,7 +73,17 @@ public:
 			TriangleCoords.GetRowAt(1),
 			GL_LINES
 		);
+	};
+
+public:
+	void PlotFunction(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfTriangles, int NoOfVariables)
+	{
+		if (NoOfVariables == 3)
+			PlotEqationLine(FnTable, FnTimeCurve, TimeIndex, NoOfTriangles);
+		else
+			PlotEquationSurface(FnTable, FnTimeCurve, TimeIndex, NoOfTriangles);
 	}
+
 	void DrawAxis(double Xmin, double Ymin, double Zmin, double Xmax, double Ymax, double Zmax)
 	{
 

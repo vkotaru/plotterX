@@ -10,12 +10,14 @@ void TestGraphRenderer()
 {
 	GraphRenderer<double> data;
 	
+	const int NoOfVar = 4;
+
 	DataTable<double> FnTable;
-	FnTable.SetNoOfVariables(4);
+	FnTable.SetNoOfVariables(NoOfVar);
 
-	std::vector<double> row[4];
+	std::vector<double> row[NoOfVar];
 
-	Variable <double> var[4];
+	Variable <double> var[NoOfVar];
 
 	var[1].SetNoOfSteps(2);
 	var[2].SetNoOfSteps(2);
@@ -71,7 +73,7 @@ void TestGraphRenderer()
 		Cam.ChangeCameraWithInput(key);
 		Cam.SetUpCameraProjection();
 		Cam.SetUpCameraTransformation();
-		data.PlotEquation(FnTable, FnTimeCurve, 0, NoOfTrianglesPerTime, 3);
+		data.PlotFunction(FnTable, FnTimeCurve, 0, NoOfTrianglesPerTime, 4);
 		data.DrawAxis(0, 0, 0, 10, 10, 10);
 
 		FsSwapBuffers();
