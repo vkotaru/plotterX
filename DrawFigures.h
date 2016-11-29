@@ -44,6 +44,21 @@ public:
 		}
 		glEnd();
 	};
+	void DrawLines3D(GLdouble X1, GLdouble Y1, GLdouble Z1, GLdouble X2, GLdouble Y2, GLdouble Z2, int LineType)
+	{
+		glBegin(LineType);
+		glVertex3d(X1, Y1, Z1);
+		glVertex3d(X2, Y2, Z2);
+
+		glEnd();
+	};
+	void DrawLines3D(std::vector<T> Coord1, std::vector<T> Coord2, int FillType)
+	{
+		DrawLines3D(Coord1.at(0), Coord1.at(1), Coord1.at(2),
+			Coord2.at(0), Coord2.at(1), Coord2.at(2),
+			FillType
+		);
+	};
 
 	void DrawTriangle3D(	GLdouble X1, GLdouble Y1, GLdouble Z1,
 							GLdouble X2, GLdouble Y2, GLdouble Z2,
@@ -67,16 +82,6 @@ public:
 			Coord3.at(0), Coord3.at(1), Coord3.at(2),
 			FillType
 		);
-	};
-
-	void DrawLines3D(GLdouble X1, GLdouble Y1, GLdouble Z1, GLdouble X2, GLdouble Y2, GLdouble Z2, int LineType)
-	{
-		glBegin(LineType);
-
-		glVertex3d(X1, Y1, Z1);
-		glVertex3d(X2, Y2, Z2);
-
-		glEnd();
 	};
 
 	void WriteMsgAtXYZ(GLdouble X, GLdouble Y, GLdouble Z, const char *Msg)

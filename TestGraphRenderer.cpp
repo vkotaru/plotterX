@@ -58,19 +58,25 @@ void TestGraphRenderer()
 	Cam.SetPosXYZ(0, 0, 10);
 	Cam.SetEulerAngles(0, 0, 0);
 	
-	FsPollDevice();
-	int key = FsInkey();
-	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	for (;;)
+	{
+		FsPollDevice();
+		int key = FsInkey();
 
-	Cam.ChangeCameraWithInput(key);
-	Cam.SetUpCameraProjection();
-	Cam.SetUpCameraTransformation();
-		
-	data.PlotEquationSurface(FnTable, FnTimeCurve, 0, NoOfTrianglesPerTime);
-	data.DrawAxis(0,0,0,10,10,10);
+		if (key == FSKEY_ESC)
+			break;
 
-	FsSwapBuffers();
-	FsSleep(10000);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		Cam.ChangeCameraWithInput(key);
+		Cam.SetUpCameraProjection();
+		Cam.SetUpCameraTransformation();
+		data.PlotEquation(FnTable, FnTimeCurve, 0, NoOfTrianglesPerTime, 3);
+		data.DrawAxis(0, 0, 0, 10, 10, 10);
+
+		FsSwapBuffers();
+		FsSleep(25);
+	}
+
 	FsCloseWindow();
 }
