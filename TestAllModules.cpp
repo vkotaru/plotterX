@@ -45,12 +45,8 @@ void TestModuleintegration()
 
 	FsOpenWindow(0, 0, 800, 600, 1);
 	glEnable(GL_DEPTH_TEST);
-
-	float h = 0.0, p = 0.0;
 	Cam.SetPosXYZ(0, 0, 10);
 	Cam.SetEulerAngles(0, 0, 0);
-
-	FsSwapBuffers();
 
 	for (;;)
 	{
@@ -73,7 +69,6 @@ void TestModuleintegration()
 		data.DrawAxis(0, 0, 0, 10, 10, 10);
 	
 		FsSwapBuffers();
-//		FsSleep(25);
 	}
 	FsCloseWindow();
 }

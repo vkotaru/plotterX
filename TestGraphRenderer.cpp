@@ -55,12 +55,10 @@ void TestGraphRenderer()
 	FsOpenWindow(0, 0, 800, 600, 1);
 	glEnable(GL_DEPTH_TEST);
 
-	float h = 0.0, p = 0.0;
 	Cam.SetPosXYZ(0, 0, 10);
 	Cam.SetEulerAngles(0, 0, 0);
-	int zoom=-10,pan=0;
+	
 	FsPollDevice();
-
 	int key = FsInkey();
 	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
