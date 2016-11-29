@@ -115,6 +115,12 @@ public:
 			case FSKEY_RIGHT:
 						SetPosX(GetPosX() - 1);
 						break;
+			case FSKEY_F:
+						SetPosY(GetPosY() + 1);
+						break;
+			case FSKEY_G:
+						SetPosY(GetPosY() - 1);
+						break;
 			case FSKEY_D:
 						SetEulerAngH(GetEulerAngH() - 1);
 						break;			
@@ -126,6 +132,12 @@ public:
 						break;
 			case FSKEY_S:
 						SetEulerAngP(GetEulerAngP() + 1);
+						break;
+			case FSKEY_Q:
+						SetEulerAngB(GetEulerAngB() - 1);
+						break;
+			case FSKEY_E:
+						SetEulerAngB(GetEulerAngB() + 1);
 						break;
 		};
 	};
@@ -153,11 +165,11 @@ public:
 		glRotated(EulerAngH, 0.0, 1.0, 0.0);  // Rotation about Y axis
 	}
 
-	void GetForwardVector(double &vx, double &vy, double &vz)
+	/*void GetForwardVector(double &vx, double &vy, double &vz)
 	{
 		vx = -cos(EulerAngP)*sin(EulerAngH);
 		vy = sin(EulerAngP);
 		vz = -cos(EulerAngP)*cos(EulerAngH);
-	}
+	}*/
 };
 #endif
