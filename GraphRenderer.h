@@ -10,15 +10,6 @@ class GraphRenderer
 	DrawFigures<T> DrawFig;
 	Color FigColor;
 
-public:
-	void PlotEquationSurface(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfTriangles)
-	{
-		for (int k = 0; k < NoOfTriangles; k++)
-		{
-			PlotTriangularFace(FnTable, FnTimeCurve.GetSurfaceRow(TimeIndex, k));
-		}
-	};
-
 	std::vector<T> ExtractRow(DataTable<T> &FnTable, int RowIndex)
 	{
 		std::vector<T> Row;
@@ -54,6 +45,15 @@ public:
 			GL_TRIANGLES
 		);
 
+	};
+
+public:
+	void PlotEquationSurface(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfTriangles)
+	{
+		for (int k = 0; k < NoOfTriangles; k++)
+		{
+			PlotTriangularFace(FnTable, FnTimeCurve.GetSurfaceRow(TimeIndex, k));
+		}
 	};
 
 	void DrawAxis(double Xmin, double Ymin, double Zmin, double Xmax, double Ymax, double Zmax)
