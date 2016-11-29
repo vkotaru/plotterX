@@ -4,7 +4,7 @@
 #include "TestSurface.cpp"
 #include "TestTimeCurve.cpp"
 #include "TestGraphRenderer.cpp"
-#include "TestPostParser.cpp"
+#include "TestAllModules.cpp"
 #include "TestParser.cpp"
 
 #include "TestModules.h"

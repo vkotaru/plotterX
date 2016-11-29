@@ -4,7 +4,7 @@
 #include <math.h>
 #include "Variable.h"
 #include "DataTable.h"
-//#include "Parser.h"
+#include "Parser.h"
 
 template <class T>
 class FunctionEval
@@ -65,7 +65,7 @@ public:
 			FnTable.SetNoOfVariables(NoOfVariables);
 	};
 
-	void Evaluate(DataTable<T> &FnTable, Variable<T> Var[] )//const char *infix)
+	void Evaluate(DataTable<T> &FnTable, Variable<T> Var[], Parser &FnParser)
 	{
 		for (auto t = Var[0].GetMin(); t <= Var[0].GetMax(); t += Var[0].GetDelta() ? Var[0].GetDelta(): true )
 		{
@@ -74,10 +74,10 @@ public:
 				for (auto y = Var[2].GetMin(); y <= Var[2].GetMax(); y += Var[2].GetDelta() ? Var[2].GetDelta() : true )
 				{
 					T z;
-					if( Debug )
+					if (Debug)
 						z = x*y*t;
 					else
-						z = sin(x)*y+t;
+						z = FnParser.Evaluate(x, y, t);
 					
 					AddRowToDataTable(t, x, y, z, FnTable);
 					UpdateVariableZ( Var[3], z);

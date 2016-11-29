@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "FuncEval.h"
+#include "Parser.h"
 
 void TestFuncEval( TestModules &TestModule )
 {
@@ -17,12 +18,14 @@ void TestFuncEval( TestModules &TestModule )
 		TestVar[i].SetNoOfSteps(9);
 	}
 
+	Parser TestFnParser;
+
 	TestModule.TestMsg("Set the no of variable:");
 	FnEval.Parser2DataTable(TestFnTable, 4);
 	TestModule.FunctionTest(TestFnTable.GetNoOfVariables() == 4);
 
 	TestModule.TestMsg("Evaluated values:");
-	FnEval.Evaluate(TestFnTable, TestVar);
+	FnEval.Evaluate(TestFnTable, TestVar, TestFnParser);
 	auto lastrow = TestFnTable.GetRowAt(TestFnTable.GetNoOfRows() - 1);
 	TestModule.FunctionTest(lastrow[3] == 1000.0 && lastrow[2] == 10 && lastrow[1] == 10 && lastrow[0] == 10);
 

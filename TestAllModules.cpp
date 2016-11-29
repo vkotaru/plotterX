@@ -21,16 +21,19 @@ void TestPostParser()
 
 	var[1].SetMin(0);
 	var[1].SetMax(4);
-	var[1].SetNoOfSteps(30);
+	var[1].SetNoOfSteps(5);
 
 	var[2].SetMin(0);
 	var[2].SetMax(4);
-	var[2].SetNoOfSteps(20);
+	var[2].SetNoOfSteps(5);
+
+	Parser FnParser;
+	FnParser.SetInfix("x+y+t");
 
 	FunctionEval<double> FnEval;
 	FnEval.Parser2DataTable(FnTable, NoOfVar);
 	
-	FnEval.Evaluate(FnTable, var);
+	FnEval.Evaluate(FnTable, var, FnParser);
 
 	TimeCurve<double> FnTimeCurve;
 	FnTimeCurve.SetNoOfTimeSteps(var[0].GetNoOfSteps());
