@@ -3,7 +3,9 @@
 #include "TestFuncEval.cpp"
 #include "TestSurface.cpp"
 #include "TestTimeCurve.cpp"
- #include "TestGraphRenderer.cpp"
+#include "TestGraphRenderer.cpp"
+#include "TestPostParser.cpp"
+#include "TestParser.cpp"
 
 #include "TestModules.h"
 #include "Errors.h"
@@ -14,7 +16,10 @@ int main()
 	{
 		TestModules TestModule;
 
-		printf("Testing the DataTable\n");
+		printf("\n\nTesting the Parser\n");
+		TestParser(TestModule);
+
+		printf("\n\nTesting the DataTable\n");
 		TestDataTable(TestModule);
 
 		printf("\n\nTesting the Variable\n");
@@ -29,8 +34,12 @@ int main()
 		printf("\n\nTesting the Time Curves\n");
 		TestTimeCurve(TestModule);
 
-		printf("\n\nTesting Graph Renderer\n");
-		TestGraphRenderer();
+		//Can't open 2 windows hence commenting this
+		//printf("\n\nTesting Graph Renderer\n");
+		//TestGraphRenderer();
+
+		printf("\n\nTesting Post Parser Renderer\n");
+		TestPostParser();
 	}
 	catch ( int ErrorCode )
 	{

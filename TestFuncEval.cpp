@@ -18,7 +18,7 @@ void TestFuncEval( TestModules &TestModule )
 	}
 
 	TestModule.TestMsg("Set the no of variable:");
-	FnEval.Parser2DataTable(TestFnTable);
+	FnEval.Parser2DataTable(TestFnTable, 4);
 	TestModule.FunctionTest(TestFnTable.GetNoOfVariables() == 4);
 
 	TestModule.TestMsg("Evaluated values:");

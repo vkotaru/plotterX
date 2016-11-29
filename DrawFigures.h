@@ -16,19 +16,19 @@ public:
 		return degree / 180.00 * PI;
 	};
 
-	void DrawRectangle2D(GLint X1, GLint Y1, GLint X2, GLint Y2, int FillType)
+	void DrawRectangle2D(GLdouble X1, GLdouble Y1, GLdouble X2, GLdouble Y2, int FillType)
 	{
 		glBegin(FillType);
 
-		glVertex2i(X1, Y1);
-		glVertex2i(X2, Y1);
-		glVertex2i(X2, Y2);
-		glVertex2i(X1, Y2);
+		glVertex2d(X1, Y1);
+		glVertex2d(X2, Y1);
+		glVertex2d(X2, Y2);
+		glVertex2d(X1, Y2);
 
 		glEnd();
 	};
 
-	void DrawCircle2D(GLint cx, GLint cy, double r)
+	void DrawCircle2D(GLfloat cx, GLfloat cy, double r)
 	{
 		glBegin(GL_TRIANGLE_FAN);
 		for (int i = 0; i<360; i += 10)
@@ -45,18 +45,18 @@ public:
 		glEnd();
 	};
 
-	void DrawTriangle3D(	GLint X1, GLint Y1, GLint Z1, 
-							GLint X2, GLint Y2, GLint Z2, 
-							GLint X3, GLint Y3, GLint Z3, 
+	void DrawTriangle3D(	GLdouble X1, GLdouble Y1, GLdouble Z1,
+							GLdouble X2, GLdouble Y2, GLdouble Z2,
+							GLdouble X3, GLdouble Y3, GLdouble Z3,
 							int FillType
 						)
 	{
 		glBegin(FillType);
 
-		glVertex3i(X1, Y1, Z1);
-		glVertex3i(X2, Y2, Z2);
-		glVertex3i(X3, Y3, Z3);
-
+		glVertex3d(X1, Y1, Z1);
+		glVertex3d(X2, Y2, Z2);
+		glVertex3d(X3, Y3, Z3);
+		
 		glEnd();
 	};
 
@@ -69,12 +69,12 @@ public:
 		);
 	};
 
-	void DrawLines3D(GLint X1, GLint Y1, GLint Z1, GLint X2, GLint Y2, GLint Z2, int LineType)
+	void DrawLines3D(GLdouble X1, GLdouble Y1, GLdouble Z1, GLdouble X2, GLdouble Y2, GLdouble Z2, int LineType)
 	{
 		glBegin(LineType);
 
-		glVertex3i(X1, Y1, Z1);
-		glVertex3i(X2, Y2, Z2);
+		glVertex3d(X1, Y1, Z1);
+		glVertex3d(X2, Y2, Z2);
 
 		glEnd();
 	};
