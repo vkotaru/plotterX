@@ -25,7 +25,7 @@ void TestModuleintegration()
 
 	var[2].SetMin(0);
 	var[2].SetMax(4);
-	var[2].SetNoOfSteps(25);
+	var[2].SetNoOfSteps(5);
 
 	Parser FnParser;
 	FnParser.SetInfix("x+y+t");
@@ -39,8 +39,10 @@ void TestModuleintegration()
 	FnTimeCurve.SetNoOfTimeSteps(var[0].GetNoOfSteps());
 	FnTimeCurve.CalculateTimeSurfaces(FnTable, var);
 
+/*	int Rows = FnTable.GetNoOfRows();
+	int TimeSteps = FnTimeCurve.GetNoOfTimeSteps();
 	int NoOfTrianglesPerTime = FnTable.GetNoOfRows() / FnTimeCurve.GetNoOfTimeSteps() - 2;
-
+*/
 	Camera Cam;
 
 	FsOpenWindow(0, 0, 800, 600, 1);
@@ -65,7 +67,7 @@ void TestModuleintegration()
 		Cam.SetUpCameraProjection();
 		Cam.SetUpCameraTransformation();
 
-		data.PlotFunction(FnTable, FnTimeCurve, 0, NoOfTrianglesPerTime, 4);
+		data.PlotFunction(FnTable, FnTimeCurve, 0, 4);
 		data.DrawAxis(0, 0, 0, 10, 10, 10);
 	
 		FsSwapBuffers();

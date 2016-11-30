@@ -73,6 +73,11 @@ public:
 	{
 		return TriangleIndices.GetRowAt(RowIndex);
 	}
+
+	int GetNoOfSurfaceRows()
+	{
+		return TriangleIndices.GetNoOfRows();
+	}
 };
 
 #endif

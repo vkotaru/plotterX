@@ -10,20 +10,20 @@ class GraphRenderer
 	DrawFigures<T> DrawFig;
 	Color FigColor;
 
-	void PlotEqationLine(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfTriangles)
+	void PlotEqationLine(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfRows)
 	{
 		glBegin(GL_LINES);
-		for (int k = 0; k < NoOfTriangles; k++)
+		for (int k = 0; k < NoOfRows; k++)
 		{
 			PlotLines(FnTable, FnTimeCurve.GetSurfaceRow(TimeIndex, k));
 		}
 		glEnd();
 	};
 
-	void PlotEquationSurface(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfTriangles)
+	void PlotEquationSurface(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfRows)
 	{
 		glBegin(GL_TRIANGLES);
-		for (int k = 0; k < NoOfTriangles; k++)
+		for (int k = 0; k < NoOfRows; k++)
 		{
 			PlotTriangularFace(FnTable, FnTimeCurve.GetSurfaceRow(TimeIndex, k));
 		}
@@ -80,12 +80,14 @@ class GraphRenderer
 	};
 
 public:
-	void PlotFunction(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfTriangles, int NoOfVariables)
+	void PlotFunction(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfVariables)
 	{
+		int NoOfRows = FnTimeCurve.GetNoOfSurfaceRowsForTimeIndex(TimeIndex);
+
 		if (NoOfVariables == 3)
-			PlotEqationLine(FnTable, FnTimeCurve, TimeIndex, NoOfTriangles);
+			PlotEqationLine(FnTable, FnTimeCurve, TimeIndex, NoOfRows);
 		else
-			PlotEquationSurface(FnTable, FnTimeCurve, TimeIndex, NoOfTriangles);
+			PlotEquationSurface(FnTable, FnTimeCurve, TimeIndex, NoOfRows);
 	}
 
 	void DrawAxis(double Xmin, double Ymin, double Zmin, double Xmax, double Ymax, double Zmax)

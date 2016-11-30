@@ -50,8 +50,6 @@ void TestGraphRenderer()
 	FnTimeCurve.SetNoOfTimeSteps(1);
 	FnTimeCurve.CalculateTimeSurfaces(FnTable, var);
 
-	int NoOfTrianglesPerTime = FnTable.GetNoOfRows() / FnTimeCurve.GetNoOfTimeSteps() - 2;
-
 	Camera Cam;
 
 	FsOpenWindow(0, 0, 800, 600, 1);
@@ -73,7 +71,7 @@ void TestGraphRenderer()
 		Cam.ChangeCameraWithInput(key);
 		Cam.SetUpCameraProjection();
 		Cam.SetUpCameraTransformation();
-		data.PlotFunction(FnTable, FnTimeCurve, 0, NoOfTrianglesPerTime, 4);
+		data.PlotFunction(FnTable, FnTimeCurve, 0, 4);
 		data.DrawAxis(0, 0, 0, 10, 10, 10);
 
 		FsSwapBuffers();

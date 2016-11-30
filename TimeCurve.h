@@ -54,6 +54,14 @@ public:
 
 		return CurrSurface.GetSurfaceRow(RowIndex);
 	}
+
+	int GetNoOfSurfaceRowsForTimeIndex( int TimeIndex )
+	{
+		Surface<T> CurrSurface;
+		CurrSurface = TimeSurfaces.at(TimeIndex);
+
+		return CurrSurface.GetNoOfSurfaceRows();
+	}
 };
 
 #endif
