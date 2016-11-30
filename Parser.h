@@ -4,7 +4,7 @@
 #include <sstream>
 #include <stack>
 #include <limits>
-#include <string>
+#include <string.h>
 #include <math.h>
 
 class Token
