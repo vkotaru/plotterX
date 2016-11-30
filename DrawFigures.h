@@ -46,11 +46,11 @@ public:
 	};
 	void DrawLines3D(GLdouble X1, GLdouble Y1, GLdouble Z1, GLdouble X2, GLdouble Y2, GLdouble Z2, int LineType)
 	{
-		glBegin(LineType);
+//		glBegin(LineType);
 		glVertex3d(X1, Y1, Z1);
 		glVertex3d(X2, Y2, Z2);
 
-		glEnd();
+//		glEnd();
 	};
 	void DrawLines3D(std::vector<T> Coord1, std::vector<T> Coord2, int FillType)
 	{
@@ -66,13 +66,13 @@ public:
 							int FillType
 						)
 	{
-		glBegin(FillType);
+//		glBegin(FillType);
 
 		glVertex3d(X1, Y1, Z1);
 		glVertex3d(X2, Y2, Z2);
 		glVertex3d(X3, Y3, Z3);
 		
-		glEnd();
+//		glEnd();
 	};
 
 	void DrawTriangle3D(std::vector<T> Coord1, std::vector<T> Coord2, std::vector<T> Coord3, int FillType)

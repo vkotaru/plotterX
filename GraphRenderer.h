@@ -12,18 +12,22 @@ class GraphRenderer
 
 	void PlotEqationLine(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfTriangles)
 	{
+		glBegin(GL_LINES);
 		for (int k = 0; k < NoOfTriangles; k++)
 		{
 			PlotLines(FnTable, FnTimeCurve.GetSurfaceRow(TimeIndex, k));
 		}
+		glEnd();
 	};
 
 	void PlotEquationSurface(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfTriangles)
 	{
+		glBegin(GL_TRIANGLES);
 		for (int k = 0; k < NoOfTriangles; k++)
 		{
 			PlotTriangularFace(FnTable, FnTimeCurve.GetSurfaceRow(TimeIndex, k));
 		}
+		glEnd();
 	};
 
 	std::vector<T> ExtractRow(DataTable<T> &FnTable, int RowIndex)
@@ -88,9 +92,11 @@ public:
 	{
 
 		FigColor.SetAndChangeColor(0, 0, 0, 255);
-		DrawFig.DrawLines3D(Xmin, Ymin, Zmin, Xmax, Ymin, Zmin, GL_LINES);
-		DrawFig.DrawLines3D(Xmin, Ymin, Zmin, Xmin, Ymax, Zmin, GL_LINES);
-		DrawFig.DrawLines3D(Xmin, Ymin, Zmin, Xmin, Ymin, Zmax, GL_LINES);
+		glBegin(GL_LINES);
+			DrawFig.DrawLines3D(Xmin, Ymin, Zmin, Xmax, Ymin, Zmin, GL_LINES);
+			DrawFig.DrawLines3D(Xmin, Ymin, Zmin, Xmin, Ymax, Zmin, GL_LINES);
+			DrawFig.DrawLines3D(Xmin, Ymin, Zmin, Xmin, Ymin, Zmax, GL_LINES);
+		glEnd();
 
 		char *CoordinateMarkings = new char[255];
 		sprintf(CoordinateMarkings, "%lf %lf %lf\0", Xmin, Ymin, Zmin);

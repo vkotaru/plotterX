@@ -25,7 +25,7 @@ void TestModuleintegration()
 
 	var[2].SetMin(0);
 	var[2].SetMax(4);
-	var[2].SetNoOfSteps(5);
+	var[2].SetNoOfSteps(25);
 
 	Parser FnParser;
 	FnParser.SetInfix("x+y+t");
