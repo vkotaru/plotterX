@@ -20,15 +20,15 @@ void TestModuleintegration()
 	var[0].SetNoOfSteps(5);
 
 	var[1].SetMin(0);
-	var[1].SetMax(9);
-	var[1].SetNoOfSteps(10);
+	var[1].SetMax(4);
+	var[1].SetNoOfSteps(5);
 
 	var[2].SetMin(0);
-	var[2].SetMax(9);
-	var[2].SetNoOfSteps(10);
+	var[2].SetMax(4);
+	var[2].SetNoOfSteps(5);
 
 	Parser FnParser;
-	FnParser.SetInfix("x+(y*y)");
+	FnParser.SetInfix("x+y");
 
 	FunctionEval<double> FnEval;
 	FnEval.Parser2DataTable(FnTable, NoOfVar);
@@ -64,8 +64,7 @@ void TestModuleintegration()
 		Cam.SetUpCameraTransformation();
 
 		data.PlotFunction(FnTable, FnTimeCurve, 0, 4);
-		data.DrawAxis(var[1].GetMin(), var[2].GetMin(), var[3].GetMin(), var[1].GetMax(), var[2].GetMax(), var[3].GetMax());
-	
+		data.DrawAxis(var[1].GetMin(), var[2].GetMin(), var[3].GetMin(), var[1].GetMax(), var[2].GetMax(), var[3].GetMax(), 10, true);
 		FsSwapBuffers();
 	}
 	FsCloseWindow();

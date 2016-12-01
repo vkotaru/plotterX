@@ -103,22 +103,22 @@ public:
 	{
 		switch (Key)
 		{
-			case FSKEY_UP:
+			case FSKEY_K:
 						SetPosZ(GetPosZ() + 1); 
 						break;
-			case FSKEY_DOWN:
+			case FSKEY_I:
 						SetPosZ(GetPosZ() - 1);
 						break;
-			case FSKEY_LEFT:
+			case FSKEY_J:
 						SetPosX(GetPosX() + 1);
 						break;
-			case FSKEY_RIGHT:
+			case FSKEY_L:
 						SetPosX(GetPosX() - 1);
 						break;
-			case FSKEY_F:
+			case FSKEY_U:
 						SetPosY(GetPosY() + 1);
 						break;
-			case FSKEY_G:
+			case FSKEY_O:
 						SetPosY(GetPosY() - 1);
 						break;
 			case FSKEY_D:

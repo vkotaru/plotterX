@@ -79,6 +79,23 @@ class GraphRenderer
 		);
 	};
 
+	void GenerateXYMesh(double Xmin, double Ymin, double Zmin, double Xmax, double Ymax, double Zmax, int NoOfDivisions)
+	{
+		FigColor.SetAndChangeColor(0, 0, 0, 255);
+
+		glEnable(GL_LINE_STIPPLE);
+		glLineStipple(1, 0xf0f0);
+
+		for (int i = 1; i < NoOfDivisions; i++)
+		{
+			glBegin(GL_LINES);
+			DrawFig.DrawLines3D(Xmin, Ymax*i / NoOfDivisions, Zmin, Xmax, Ymax*i / NoOfDivisions, Zmin, GL_LINES);
+			DrawFig.DrawLines3D(Xmax*i / NoOfDivisions, Ymin, Zmin, Xmax*i / NoOfDivisions, Ymax, Zmin, GL_LINES);
+			glEnd();
+		}
+		glDisable(GL_LINE_STIPPLE);
+	}
+
 public:
 	void PlotFunction(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfVariables)
 	{
@@ -90,14 +107,14 @@ public:
 			PlotEquationSurface(FnTable, FnTimeCurve, TimeIndex, NoOfRows);
 	}
 
-	void DrawAxis(double Xmin, double Ymin, double Zmin, double Xmax, double Ymax, double Zmax)
+	void DrawAxis(double Xmin, double Ymin, double Zmin, double Xmax, double Ymax, double Zmax, int NoOfDivisions = 10, bool DrawMesh = false )
 	{
 
 		FigColor.SetAndChangeColor(0, 0, 0, 255);
 		glBegin(GL_LINES);
-			DrawFig.DrawLines3D(Xmin, Ymin, Zmin, Xmax, Ymin, Zmin, GL_LINES);
-			DrawFig.DrawLines3D(Xmin, Ymin, Zmin, Xmin, Ymax, Zmin, GL_LINES);
-			DrawFig.DrawLines3D(Xmin, Ymin, Zmin, Xmin, Ymin, Zmax, GL_LINES);
+		DrawFig.DrawLines3D(Xmin, Ymin, Zmin, Xmax, Ymin, Zmin, GL_LINES);
+		DrawFig.DrawLines3D(Xmin, Ymin, Zmin, Xmin, Ymax, Zmin, GL_LINES);
+		DrawFig.DrawLines3D(Xmin, Ymin, Zmin, Xmin, Ymin, Zmax, GL_LINES);
 		glEnd();
 
 		char *CoordinateMarkings = new char[255];
@@ -112,6 +129,22 @@ public:
 
 		sprintf(CoordinateMarkings, "%lf Z_axis\0", Zmax);
 		DrawFig.WriteMsgAtXYZ(Xmin, Ymin, Zmax, CoordinateMarkings);
+
+
+		for (int i = 1; i < NoOfDivisions; i++)
+		{
+			sprintf(CoordinateMarkings, "%lf \0", Xmax*i / NoOfDivisions);
+			DrawFig.WriteMsgAtXYZ(Xmax*i / NoOfDivisions, Ymin, Zmin, CoordinateMarkings);
+
+			sprintf(CoordinateMarkings, "%lf \0", Ymax*i / NoOfDivisions);
+			DrawFig.WriteMsgAtXYZ(Xmin, Ymax*i / NoOfDivisions, Zmin, CoordinateMarkings);
+
+			sprintf(CoordinateMarkings, "%lf \0", Zmax*i / NoOfDivisions);
+			DrawFig.WriteMsgAtXYZ(Xmin, Ymin, Zmax*i / NoOfDivisions, CoordinateMarkings);
+		}
+
+		if (DrawMesh)
+			GenerateXYMesh(Xmin, Ymin, Zmin, Xmax, Ymax, Zmax, NoOfDivisions);
 	}
 };
 #endif
