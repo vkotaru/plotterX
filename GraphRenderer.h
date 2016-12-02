@@ -94,9 +94,8 @@ class GraphRenderer
 			glEnd();
 		}
 		glDisable(GL_LINE_STIPPLE);
-	}
+	};
 
-public:
 	void PlotFunction(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfVariables)
 	{
 		int NoOfRows = FnTimeCurve.GetNoOfSurfaceRowsForTimeIndex(TimeIndex);
@@ -105,9 +104,9 @@ public:
 			PlotEqationLine(FnTable, FnTimeCurve, TimeIndex, NoOfRows);
 		else
 			PlotEquationSurface(FnTable, FnTimeCurve, TimeIndex, NoOfRows);
-	}
+	};
 
-	void DrawAxis(double Xmin, double Ymin, double Zmin, double Xmax, double Ymax, double Zmax, int NoOfDivisions = 10, bool DrawMesh = false )
+	void DrawAxis(double Xmin, double Ymin, double Zmin, double Xmax, double Ymax, double Zmax, int NoOfDivisions = 10, bool DrawMesh = false)
 	{
 
 		FigColor.SetAndChangeColor(0, 0, 0, 255);
@@ -145,6 +144,48 @@ public:
 
 		if (DrawMesh)
 			GenerateXYMesh(Xmin, Ymin, Zmin, Xmax, Ymax, Zmax, NoOfDivisions);
-	}
+	};
+
+public:
+	void PlotGraph(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, Variable<T> Var[],int NoOfVariables, int NoOfDivisionsForAxis = 10, bool DrawMeshOnXYPlane = false)
+	{
+		Camera Cam;
+
+		if ( !FsCheckWindowOpen() )
+			FsOpenWindow(0, 0, 800, 600, 1);
+
+		glEnable(GL_DEPTH_TEST);
+		Cam.SetPosXYZ(0, 0, 10);
+		Cam.SetEulerAngles(0, 0, 0);
+
+		int key = FsInkey();
+
+		for (int TimeIndex = 0, Counter = 0; key != FSKEY_ESC; Counter++)
+		{
+			FsPollDevice();
+			key = FsInkey();
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			Cam.ChangeCameraWithInput(key);
+			Cam.SetUpCameraProjection();
+			Cam.SetUpCameraTransformation();
+
+			PlotFunction(FnTable, FnTimeCurve, TimeIndex, 4);
+			DrawAxis(Var[1].GetMin(), Var[2].GetMin(), Var[3].GetMin(), Var[1].GetMax(), Var[2].GetMax(), Var[3].GetMax(), 10, true);
+			FsSwapBuffers();
+			if (Counter >= 50)
+			{
+				if (++TimeIndex == FnTimeCurve.GetNoOfTimeSteps())
+					TimeIndex = 0;
+
+				Counter = 0;
+			}
+		};
+	};
+
+	void CloseGraphics()
+	{
+		FsCloseWindow();
+	};
 };
 #endif

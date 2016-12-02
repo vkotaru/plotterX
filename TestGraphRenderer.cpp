@@ -8,8 +8,6 @@
 
 void TestGraphRenderer()
 {
-	GraphRenderer<double> data;
-	
 	const int NoOfVar = 4;
 
 	DataTable<double> FnTable;
@@ -21,6 +19,15 @@ void TestGraphRenderer()
 
 	var[1].SetNoOfSteps(2);
 	var[2].SetNoOfSteps(2);
+
+	var[1].SetMin(0);
+	var[2].SetMin(0);
+
+	var[1].SetMax(10);
+	var[2].SetMax(10);
+
+	var[3].SetMin(0);
+	var[3].SetMax(10);
 
 	row[0].push_back(0);
 	row[0].push_back(0);
@@ -50,32 +57,6 @@ void TestGraphRenderer()
 	FnTimeCurve.SetNoOfTimeSteps(1);
 	FnTimeCurve.CalculateTimeSurfaces(FnTable, var);
 
-	Camera Cam;
-
-	FsOpenWindow(0, 0, 800, 600, 1);
-	glEnable(GL_DEPTH_TEST);
-
-	Cam.SetPosXYZ(0, 0, 10);
-	Cam.SetEulerAngles(0, 0, 0);
-	
-	for (;;)
-	{
-		FsPollDevice();
-		int key = FsInkey();
-
-		if (key == FSKEY_ESC)
-			break;
-
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		Cam.ChangeCameraWithInput(key);
-		Cam.SetUpCameraProjection();
-		Cam.SetUpCameraTransformation();
-		data.PlotFunction(FnTable, FnTimeCurve, 0, 4);
-		data.DrawAxis(0, 0, 0, 10, 10, 10, 10, true);
-		FsSwapBuffers();
-		FsSleep(25);
-	}
-
-	FsCloseWindow();
+	GraphRenderer<double> TestFnGraph;
+	TestFnGraph.PlotGraph(FnTable, FnTimeCurve, var, 4);
 }

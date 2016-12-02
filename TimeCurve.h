@@ -63,5 +63,4 @@ public:
 		return CurrSurface.GetNoOfSurfaceRows();
 	}
 };
-
 #endif

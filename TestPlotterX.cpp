@@ -46,6 +46,5 @@ int main()
 		Errors Error;
 		Error.CatchError(ErrorCode);
 	}
-
 	return 0;
 }
