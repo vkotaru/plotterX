@@ -155,29 +155,47 @@ public:
 			FsOpenWindow(0, 0, 800, 600, 1);
 
 		glEnable(GL_DEPTH_TEST);
-		Cam.SetPosXYZ(0, 0, 10);
-		Cam.SetEulerAngles(0, 0, 0);
+		Cam.SetPosXYZ(Var[1].GetMin(), Var[2].GetMin(), Var[3].GetMax() + 10);
 
 		int key = FsInkey();
 
+		int PrevTimeIndex = -1;
+
+		GLuint index = glGenLists(1);
+		
 		for (int TimeIndex = 0, Counter = 0; key != FSKEY_ESC; Counter++)
 		{
 			FsPollDevice();
 			key = FsInkey();
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 			Cam.ChangeCameraWithInput(key);
 			Cam.SetUpCameraProjection();
 			Cam.SetUpCameraTransformation();
 
-			PlotFunction(FnTable, FnTimeCurve, TimeIndex, 4);
-			DrawAxis(Var[1].GetMin(), Var[2].GetMin(), Var[3].GetMin(), Var[1].GetMax(), Var[2].GetMax(), Var[3].GetMax(), 10, true);
+			if (PrevTimeIndex != TimeIndex)
+			{
+				glNewList(index, GL_COMPILE);
+
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+				PlotFunction(FnTable, FnTimeCurve, TimeIndex, 4);
+				DrawAxis(Var[1].GetMin(), Var[2].GetMin(), Var[3].GetMin(), Var[1].GetMax(), Var[2].GetMax(), Var[3].GetMax(), 10, true);
+
+				glEndList();				
+				glCallList(index);
+				
+				PrevTimeIndex = TimeIndex;
+			}
+			else
+			{
+				glCallList(index);
+
+			};
 			FsSwapBuffers();
+			
 			if (Counter >= 50)
 			{
-				if (++TimeIndex == FnTimeCurve.GetNoOfTimeSteps())
+				if (++TimeIndex >= FnTimeCurve.GetNoOfTimeSteps())
 					TimeIndex = 0;
-
 				Counter = 0;
 			}
 		};
