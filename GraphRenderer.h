@@ -177,12 +177,10 @@ class GraphRenderer
 		{
 			GenerateTimeIndexDisplayList(DisplayLists, TimeIndex, FnTable, FnTimeCurve, Var, NoOfVariables, NoOfDivisionsForAxis, DrawMeshOnXYPlane);
 		}
-
-
 	};
 
 public:
-	void PlotGraph(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, Variable<T> Var[],int NoOfVariables, int NoOfDivisionsForAxis = 10, bool DrawMeshOnXYPlane = true)
+	void PlotGraph(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, Variable<T> Var[],int NoOfVariables, int NoOfDivisionsForAxis = 10, bool DrawMeshOnXYPlane = true, double Speed = 1)
 	{
 		Camera Cam;
 		if ( !FsCheckWindowOpen() )
@@ -194,23 +192,32 @@ public:
 		GLuint DisplayLists = glGenLists(FnTimeCurve.GetNoOfTimeSteps());
 		GenerateGLLists(DisplayLists, FnTable, FnTimeCurve, Var, NoOfVariables, NoOfDivisionsForAxis, DrawMeshOnXYPlane);
 
-		for (int TimeIndex = 0, Counter = 0, key = FsInkey(); key != FSKEY_ESC; Counter++)
+		double Counter = 0;
+
+		for (int TimeIndex = 0, key = FsInkey(); key != FSKEY_ESC; Counter += Speed)
 		{
 			FsPollDevice();
 			key = FsInkey();
 			Cam.ChangeCameraWithInput(key);
 			Cam.SetUpCameraProjection();
 			Cam.SetUpCameraTransformation();
-
 			glCallList(DisplayLists + TimeIndex);
 			FsSwapBuffers();
 			
-			if (Counter >= 50)
+			if (Counter >= 100)
 			{
 				if (++TimeIndex >= FnTimeCurve.GetNoOfTimeSteps())
 					TimeIndex = 0;
 				Counter = 0;
 			}
+
+			if (key == FSKEY_UP)
+				Speed++;
+
+			if (key == FSKEY_DOWN)
+				Speed--;
+
+			FsSleep(10);
 		};
 	};
 

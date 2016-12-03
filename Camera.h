@@ -18,7 +18,7 @@ public:
 		PosY = 5;
 		PosZ = 5;
 		EulerAngH = 0;
-		EulerAngP = 0;
+		EulerAngP = -70;
 		EulerAngB = 0;
 
 		fov = 60; 
