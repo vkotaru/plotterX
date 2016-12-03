@@ -2,6 +2,7 @@
 #define __GRAPH_RENDERER_H__
 
 #include <vector>
+#include <thread>
 #include "fssimplewindow.h"
 
 template <class T>
@@ -106,7 +107,7 @@ class GraphRenderer
 			PlotEquationSurface(FnTable, FnTimeCurve, TimeIndex, NoOfRows);
 	};
 
-	void DrawAxis(double Xmin, double Ymin, double Zmin, double Xmax, double Ymax, double Zmax, int NoOfDivisions = 10, bool DrawMesh = false)
+	void DrawAxis(double Xmin, double Ymin, double Zmin, double Xmax, double Ymax, double Zmax, int NoOfDivisions, bool DrawMesh)
 	{
 
 		FigColor.SetAndChangeColor(0, 0, 0, 255);
@@ -146,24 +147,54 @@ class GraphRenderer
 			GenerateXYMesh(Xmin, Ymin, Zmin, Xmax, Ymax, Zmax, NoOfDivisions);
 	};
 
+	void GenerateTimeIndexDisplayList(GLuint &DisplayLists, int TimeIndex, DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, Variable<T> Var[], int NoOfVariables, int NoOfDivisionsForAxis, bool DrawMeshOnXYPlane)
+	{
+		printf("\nGenerating List %d of %d", TimeIndex + 1, FnTimeCurve.GetNoOfTimeSteps());
+		glNewList(DisplayLists + TimeIndex, GL_COMPILE);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		PlotFunction(FnTable, FnTimeCurve, TimeIndex, NoOfVariables);
+		DrawAxis(Var[1].GetMin(), Var[2].GetMin(), Var[3].GetMin(), Var[1].GetMax(), Var[2].GetMax(), Var[3].GetMax(), NoOfDivisionsForAxis, DrawMeshOnXYPlane);
+		glEndList();
+		printf("\nGenerated List %d of %d", TimeIndex + 1, FnTimeCurve.GetNoOfTimeSteps());
+	};
+
+	void GenerateGLLists(GLuint &DisplayLists, DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, Variable<T> Var[], int NoOfVariables, int NoOfDivisionsForAxis, bool DrawMeshOnXYPlane)
+	{
+//		std::vector<std::thread> DisplayListThread;
+//		for (int TimeIndex = 0; TimeIndex < FnTimeCurve.GetNoOfTimeSteps(); TimeIndex++)
+//		{
+//			DisplayListThread.push_back(std::thread( &GraphRenderer<T>::GenerateTimeIndexDisplayList, this, DisplayLists, TimeIndex, FnTable, FnTimeCurve, Var, NoOfVariables, NoOfDivisionsForAxis, DrawMeshOnXYPlane));
+//		}
+//
+//		for (int TimeIndex = 0; TimeIndex < FnTimeCurve.GetNoOfTimeSteps(); TimeIndex++)
+//		{
+//			DisplayListThread.at(TimeIndex).join();
+//		}
+//
+//		DisplayListThread.clear();
+
+		for (int TimeIndex = 0; TimeIndex < FnTimeCurve.GetNoOfTimeSteps(); TimeIndex++)
+		{
+			GenerateTimeIndexDisplayList(DisplayLists, TimeIndex, FnTable, FnTimeCurve, Var, NoOfVariables, NoOfDivisionsForAxis, DrawMeshOnXYPlane);
+		}
+
+
+	};
+
 public:
-	void PlotGraph(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, Variable<T> Var[],int NoOfVariables, int NoOfDivisionsForAxis = 10, bool DrawMeshOnXYPlane = false)
+	void PlotGraph(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, Variable<T> Var[],int NoOfVariables, int NoOfDivisionsForAxis = 10, bool DrawMeshOnXYPlane = true)
 	{
 		Camera Cam;
-
 		if ( !FsCheckWindowOpen() )
 			FsOpenWindow(0, 0, 800, 600, 1);
 
 		glEnable(GL_DEPTH_TEST);
 		Cam.SetPosXYZ(Var[1].GetMin(), Var[2].GetMin(), Var[3].GetMax() + 10);
 
-		int key = FsInkey();
+		GLuint DisplayLists = glGenLists(FnTimeCurve.GetNoOfTimeSteps());
+		GenerateGLLists(DisplayLists, FnTable, FnTimeCurve, Var, NoOfVariables, NoOfDivisionsForAxis, DrawMeshOnXYPlane);
 
-		int PrevTimeIndex = -1;
-
-		GLuint index = glGenLists(1);
-		
-		for (int TimeIndex = 0, Counter = 0; key != FSKEY_ESC; Counter++)
+		for (int TimeIndex = 0, Counter = 0, key = FsInkey(); key != FSKEY_ESC; Counter++)
 		{
 			FsPollDevice();
 			key = FsInkey();
@@ -171,25 +202,7 @@ public:
 			Cam.SetUpCameraProjection();
 			Cam.SetUpCameraTransformation();
 
-			if (PrevTimeIndex != TimeIndex)
-			{
-				glNewList(index, GL_COMPILE);
-
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-				PlotFunction(FnTable, FnTimeCurve, TimeIndex, 4);
-				DrawAxis(Var[1].GetMin(), Var[2].GetMin(), Var[3].GetMin(), Var[1].GetMax(), Var[2].GetMax(), Var[3].GetMax(), 10, true);
-
-				glEndList();				
-				glCallList(index);
-				
-				PrevTimeIndex = TimeIndex;
-			}
-			else
-			{
-				glCallList(index);
-
-			};
+			glCallList(DisplayLists + TimeIndex);
 			FsSwapBuffers();
 			
 			if (Counter >= 50)

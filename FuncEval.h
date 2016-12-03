@@ -67,12 +67,16 @@ public:
 
 	void Evaluate(DataTable<T> &FnTable, Variable<T> Var[], Parser &FnParser)
 	{
-		for (auto t = Var[0].GetMin(); t <= Var[0].GetMax(); t += Var[0].GetDelta() ? Var[0].GetDelta(): true )
+		for (T i = 0; i < Var[0].GetNoOfSteps(); i++)
 		{
-			for (auto x = Var[1].GetMin(); x <= Var[1].GetMax(); x += Var[1].GetDelta() ? Var[1].GetDelta() : true )
+			for (T j = 0; j < Var[1].GetNoOfSteps(); j++)
 			{
-				for (auto y = Var[2].GetMin(); y <= Var[2].GetMax(); y += Var[2].GetDelta() ? Var[2].GetDelta() : true )
+				for (T k = 0; k < Var[2].GetNoOfSteps(); k++)
 				{
+					auto t = Var[0].GetMin() + i * Var[0].GetDelta();
+					auto x = Var[1].GetMin() + j * Var[1].GetDelta();
+					auto y = Var[2].GetMin() + k * Var[2].GetDelta();
+					
 					T z;
 					if (Debug)
 						z = x*y*t;
