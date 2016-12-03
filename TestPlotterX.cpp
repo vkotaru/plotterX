@@ -35,8 +35,8 @@ int main()
 		TestTimeCurve(TestModule);
 
 		//Can't open 2 windows hence commenting this
-		printf("\n\nTesting Graph Renderer\n");
-		TestGraphRenderer();
+		//printf("\n\nTesting Graph Renderer\n");
+	//	TestGraphRenderer();
 		
 		printf("\n\nTesting All Modules Integration\n");
 		TestModuleintegration();

@@ -21,12 +21,12 @@ class GraphRenderer
 		glEnd();
 	};
 
-	void PlotEquationSurface(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfRows)
+	void PlotEquationSurface(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfRows, Variable<T> Var[])
 	{
 		glBegin(GL_TRIANGLES);
 		for (int k = 0; k < NoOfRows; k++)
 		{
-			PlotTriangularFace(FnTable, FnTimeCurve.GetSurfaceRow(TimeIndex, k));
+			PlotTriangularFace(FnTable, FnTimeCurve.GetSurfaceRow(TimeIndex, k), Var);
 		}
 		glEnd();
 	};
@@ -53,11 +53,12 @@ class GraphRenderer
 		return TriangleCoords;
 	};
 
-	void PlotTriangularFace(DataTable<T> &FnTable, std::vector<int> TableIndex)
+	void PlotTriangularFace(DataTable<T> &FnTable, std::vector<int> TableIndex, Variable<T> Var[])
 	{
-		FigColor.SetAndChangeColor(0, 0, 255, 255);
-
 		DataTable<T> TriangleCoords = ExtractCoords(FnTable, TableIndex);
+		double delta = Var[3].GetMax();// -Var[3].GetMin();
+		double avg = (TriangleCoords.GetRowAt(0).at(2) + TriangleCoords.GetRowAt(1).at(2) + TriangleCoords.GetRowAt(2).at(2)) / 3;
+		FigColor.SetAndChangeColor(255 * avg / delta, 0, 200-200*avg/delta, 255);
 
 		DrawFig.DrawTriangle3D(
 			TriangleCoords.GetRowAt(0),
@@ -97,14 +98,14 @@ class GraphRenderer
 		glDisable(GL_LINE_STIPPLE);
 	};
 
-	void PlotFunction(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfVariables)
+	void PlotFunction(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfVariables, Variable<T> Var[])
 	{
 		int NoOfRows = FnTimeCurve.GetNoOfSurfaceRowsForTimeIndex(TimeIndex);
 
 		if (NoOfVariables == 3)
 			PlotEqationLine(FnTable, FnTimeCurve, TimeIndex, NoOfRows);
 		else
-			PlotEquationSurface(FnTable, FnTimeCurve, TimeIndex, NoOfRows);
+			PlotEquationSurface(FnTable, FnTimeCurve, TimeIndex, NoOfRows,Var);
 	};
 
 	void DrawAxis(double Xmin, double Ymin, double Zmin, double Xmax, double Ymax, double Zmax, int NoOfDivisions, bool DrawMesh)
@@ -152,7 +153,7 @@ class GraphRenderer
 		printf("\nGenerating List %d of %d", TimeIndex + 1, FnTimeCurve.GetNoOfTimeSteps());
 		glNewList(DisplayLists + TimeIndex, GL_COMPILE);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		PlotFunction(FnTable, FnTimeCurve, TimeIndex, NoOfVariables);
+		PlotFunction(FnTable, FnTimeCurve, TimeIndex, NoOfVariables,Var);
 		DrawAxis(Var[1].GetMin(), Var[2].GetMin(), Var[3].GetMin(), Var[1].GetMax(), Var[2].GetMax(), Var[3].GetMax(), NoOfDivisionsForAxis, DrawMeshOnXYPlane);
 		glEndList();
 		printf("\nGenerated List %d of %d", TimeIndex + 1, FnTimeCurve.GetNoOfTimeSteps());
