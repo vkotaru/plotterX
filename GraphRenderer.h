@@ -133,12 +133,13 @@ class GraphRenderer
 
 		glEnable(GL_LINE_STIPPLE);
 		glLineStipple(1, 0xf0f0);
-
+		double deltaX = (Xmax - Xmin)/ NoOfDivisions;
+		double deltaY = (Ymax - Ymin)/ NoOfDivisions;
 		for (int i = 1; i < NoOfDivisions; i++)
 		{
 			glBegin(GL_LINES);
-			DrawFig.DrawLines3D(Xmin, Ymax*i / NoOfDivisions, Zmin, Xmax, Ymax*i / NoOfDivisions, Zmin, GL_LINES);
-			DrawFig.DrawLines3D(Xmax*i / NoOfDivisions, Ymin, Zmin, Xmax*i / NoOfDivisions, Ymax, Zmin, GL_LINES);
+			DrawFig.DrawLines3D(Xmin, Ymin+i*deltaY, Zmin, Xmax, Ymin + i*deltaY, Zmin, GL_LINES);
+			DrawFig.DrawLines3D(Xmin + i*deltaX, Ymin, Zmin, Xmin + i*deltaX, Ymax, Zmin, GL_LINES);
 			glEnd();
 		}
 		glDisable(GL_LINE_STIPPLE);
@@ -177,17 +178,20 @@ class GraphRenderer
 		sprintf(CoordinateMarkings, "%lf Z_axis\0", Zmax);
 		DrawFig.WriteMsgAtXYZ(Xmin, Ymin, Zmax, CoordinateMarkings);
 
+		double deltaX = (Xmax - Xmin) / NoOfDivisions;
+		double deltaY = (Ymax - Ymin) / NoOfDivisions;
+		double deltaZ = (Zmax - Zmin) / NoOfDivisions;
 
 		for (int i = 1; i < NoOfDivisions; i++)
 		{
-			sprintf(CoordinateMarkings, "%lf \0", Xmax*i / NoOfDivisions);
-			DrawFig.WriteMsgAtXYZ(Xmax*i / NoOfDivisions, Ymin, Zmin, CoordinateMarkings);
+			sprintf(CoordinateMarkings, "%lf \0", Xmin + i*deltaX);
+			DrawFig.WriteMsgAtXYZ(Xmin + i*deltaX, Ymin, Zmin, CoordinateMarkings);
 
-			sprintf(CoordinateMarkings, "%lf \0", Ymax*i / NoOfDivisions);
-			DrawFig.WriteMsgAtXYZ(Xmin, Ymax*i / NoOfDivisions, Zmin, CoordinateMarkings);
+			sprintf(CoordinateMarkings, "%lf \0", Ymin + i*deltaY);
+			DrawFig.WriteMsgAtXYZ(Xmin, Ymin + i*deltaY, Zmin, CoordinateMarkings);
 
-			sprintf(CoordinateMarkings, "%lf \0", Zmax*i / NoOfDivisions);
-			DrawFig.WriteMsgAtXYZ(Xmin, Ymin, Zmax*i / NoOfDivisions, CoordinateMarkings);
+			sprintf(CoordinateMarkings, "%lf \0", Zmin + i*deltaZ);
+			DrawFig.WriteMsgAtXYZ(Xmin, Ymin, Zmin + i*deltaZ, CoordinateMarkings);
 		}
 
 		if (DrawMesh)
