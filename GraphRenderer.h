@@ -56,63 +56,14 @@ class GraphRenderer
 	void PlotTriangularFace(DataTable<T> &FnTable, std::vector<int> TableIndex, Variable<T> Var[])
 	{
 		DataTable<T> TriangleCoords = ExtractCoords(FnTable, TableIndex);
-		double max = Var[3].GetMax();
-		double delta = Var[3].GetMax() - Var[3].GetMin();
-		float r, g, b, r1, g1, b1, r2, g2, b2;
-		double avg = (TriangleCoords.GetRowAt(0).at(2) + TriangleCoords.GetRowAt(1).at(2) + TriangleCoords.GetRowAt(2).at(2)) / 3;
-
-		RainbowColor(r, g, b, TriangleCoords.GetRowAt(0).at(2)/ Var[3].GetMax());
-		RainbowColor(r1, g1, b1, TriangleCoords.GetRowAt(1).at(2)/ Var[3].GetMax());
-		RainbowColor(r2, g2, b2, TriangleCoords.GetRowAt(2).at(2)/ Var[3].GetMax());
-
 
 		DrawFig.DrawTriangle3D(
 			TriangleCoords.GetRowAt(0),
 			TriangleCoords.GetRowAt(1),
 			TriangleCoords.GetRowAt(2),
-			GL_TRIANGLES,r,g,b,r1,g1,b1,r2,g2,b2
+			true, Var[3].GetMin(), Var[3].GetMax()
 		);
 	};
-	void RainbowColor(float &r, float &g, float &b, const double t)
-	{
-
-		if (t<0)
-		{
-			r = 0;
-			g = 0;
-			b = 1;
-		}
-		else if (1<t)
-		{
-			r = 1;
-			g = 0;
-			b = 0;
-		}
-		else if (t<0.25)
-		{
-			r = 0;
-			b = 1;
-			g = t / 0.25;
-		}
-		else if (t<0.5)
-		{
-			r = 0;
-			g = 1;
-			b = 1 - (t - 0.25) / 0.25;
-		}
-		else if (t<0.75)
-		{
-			r = (t - 0.5) / 0.25;
-			g = 1;
-			b = 0;
-		}
-		else
-		{
-			r = 1;
-			g = 1 - (t - 0.75) / 0.25;
-			b = 0;
-		}
-	}
 
 	void PlotLines(DataTable<T> &FnTable, std::vector<int> TableIndex)
 	{

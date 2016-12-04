@@ -15,22 +15,22 @@ void TestModuleintegration()
 	FnTable.SetNoOfVariables(NoOfVar);
 
 	Variable <double> var[NoOfVar];
-	var[0].SetMin(0.5);
+	var[0].SetMin(-2);
 	var[0].SetMax(2);
-	var[0].SetNoOfSteps(6);
+	var[0].SetNoOfSteps(5);
 
-	var[1].SetMin(0);
+	var[1].SetMin(-4);
 	var[1].SetMax(4);
-	var[1].SetNoOfSteps(10);
+	var[1].SetNoOfSteps(20);
 
-	var[2].SetMin(0);
+	var[2].SetMin(-4);
 	var[2].SetMax(4);
-	var[2].SetNoOfSteps(10);
+	var[2].SetNoOfSteps(20);
 
 	printf("\nSet the Variables");
 
 	Parser FnParser;
-	FnParser.SetInfix("sin(t*x)+cos(y*t)");
+	FnParser.SetInfix("sin(t*x*y)");
 
 	printf("\nSet the Parser Function");
 

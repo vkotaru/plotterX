@@ -8,5 +8,7 @@
 #define Error_Variable_No_Of_Steps_Already_Set 4
 #define Error_Variable_Delta_Already_Set 5
 
+//Define Other Constants
+#define PI 3.1415927
 
 #endif
