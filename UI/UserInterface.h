@@ -2,7 +2,9 @@
 #define __USER_INTERFACE_H__
 
 #include "UIUtilities.h"
-#include "CameraTmp.h"
+#include "../Camera.h"
+#include "../Parser.h"
+#include "../Variable.h"
 
 class UserInterface : public UIUtilities
 {
@@ -11,23 +13,31 @@ private:
 	// Evaluate options
 	int RenderState;
 	bool AnyWindowActivated;
-	CameraObject camera;
+
+	int key;
 public:
 	UserInterface();
 	~UserInterface();
-
+	Camera cam;
 
 	// Basic Functions
 	void Initialize();
 	void OpenWindow(const double AspectRatio);
 	void AutoScaleWindow();
+	void DisplayInterface();
+	void DisplayGraphics();
 
 	// 2D & 3D
 	void SetUp2DEnvironment();
 
 	// UI_polling
-	void Polling();
+	int Polling();
 	void DeActivateAllInputWindows();
+
+	// Data-Transfer
+	void ValidateInput();
+	void TransferDataToBackEnd(Variable <double> var[], Parser& FnParser, char * InputEq);
+
 	// Windows
 	void DisplayTitleWindow();
 
@@ -39,6 +49,8 @@ public:
 	void DisplayGraphicsWindow();
 	void DisplayToolsWindow();
 	void DisplayFooterWindow();
+
+	void DrawGroundLattice(void);
 };
 
 

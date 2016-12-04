@@ -58,5 +58,5 @@ void TestGraphRenderer()
 	FnTimeCurve.CalculateTimeSurfaces(FnTable, var);
 
 	GraphRenderer<double> TestFnGraph;
-	TestFnGraph.PlotGraph(FnTable, FnTimeCurve, var, 4);
+	//TestFnGraph.PlotGraph(FnTable, FnTimeCurve, var, 4);
 }

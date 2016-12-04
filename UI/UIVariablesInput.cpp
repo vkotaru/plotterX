@@ -13,6 +13,10 @@ UIVariablesInput::UIVariablesInput()
 UIVariablesInput::~UIVariablesInput()
 {
 	CursorLocation = 0;
+	VariableInputValues[0] = 0.0;
+	VariableInputValues[1] = 0.0;
+	VariableInputValues[2] = 0.0;
+	VariableInputValues[3] = 0.0;
 }
 
 
@@ -28,18 +32,18 @@ const double UIVariablesInput::GetDelta() const
 {
 	return VariableInputValues[2];
 }
-const double UIVariablesInput::GetNoOfSets() const
+const int UIVariablesInput::GetNoOfSteps() const
 {
-	return VariableInputValues[3];
+	return (int) VariableInputValues[3];
 }
 
 bool UIVariablesInput::Input(std::string & str_, int CursorLoc)
 {
-	FsPollDevice();
-	auto key = FsInkey();
+	//key = FsInkey();
 	if (key == FSKEY_ENTER)
 	{
-		return true;
+		//return true
+		CursorLocation = MAX(MIN(CursorLocation + 1, (NO_OF_INDEPENDENT_VARIABLE_PARAMETERS - 1)), 0);
 	}
 	else if (key == FSKEY_ESC)
 	{
@@ -60,7 +64,7 @@ bool UIVariablesInput::Input(std::string & str_, int CursorLoc)
 	{
 		CursorLocation = MAX(MIN(CursorLocation - 1, (NO_OF_INDEPENDENT_VARIABLE_PARAMETERS - 1)), 0);
 	}
-	auto c = FsInkeyChar();
+	auto c =FsInkeyChar();
 	if (' ' <= c)
 	{
 		//str.Add(c);
@@ -149,8 +153,9 @@ void UIVariablesInput::Display(const char msgtitle[])
 		}
 		//displaytextmsgat(x + 10, y + 16 + 16, str.getpointer(),5, general_text_font_color_r, general_text_font_color_g, general_text_font_color_b);
 	}
+	//ConvertVariablesToValues();
 }
-void UIVariablesInput::ConvertVariablesToValeus()
+void UIVariablesInput::ConvertVariablesToValues()
 {
 	for (int i = 0; i < NO_OF_INDEPENDENT_VARIABLE_PARAMETERS; ++i)
 	{
@@ -161,6 +166,7 @@ void UIVariablesInput::ConvertVariablesToValeus()
 double UIVariablesInput::Convert2Double(std::string str_)
 {
 	double value = atof(str_.c_str());
+	//printf("%f \t", value);
 	return value;
 }
 

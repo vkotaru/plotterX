@@ -32,8 +32,14 @@ public:
 
 		fov = YsPi / 6.0;  // 30 degree
 		nearZ = 0.1;
-		farZ = 200.0;
+		farZ = 1000.0;
 	}
+
+	void SetPosY(double value)
+	{
+		y = value;
+	}
+
 	void SetUpCameraProjection(void)
 	{
 		int wid, hei;

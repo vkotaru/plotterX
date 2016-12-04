@@ -5,13 +5,15 @@
 #include <thread>
 #include "fssimplewindow.h"
 
+#include "./UI/UserInterface.h"
+
 template <class T>
 class GraphRenderer
 {
 	DrawFigures<T> DrawFig;
 	Color FigColor;
 
-	void PlotEqationLine(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfRows)
+	void PlotEqationLine(DataTable<T> &FnTable, TimeCurve<T> &FnTimeCurve, int TimeIndex, int NoOfRows)
 	{
 		glBegin(GL_LINES);
 		for (int k = 0; k < NoOfRows; k++)
@@ -21,7 +23,7 @@ class GraphRenderer
 		glEnd();
 	};
 
-	void PlotEquationSurface(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfRows, Variable<T> Var[])
+	void PlotEquationSurface(DataTable<T> &FnTable, TimeCurve<T> &FnTimeCurve, int TimeIndex, int NoOfRows, Variable<T> Var[])
 	{
 		glBegin(GL_TRIANGLES);
 		for (int k = 0; k < NoOfRows; k++)
@@ -56,63 +58,17 @@ class GraphRenderer
 	void PlotTriangularFace(DataTable<T> &FnTable, std::vector<int> TableIndex, Variable<T> Var[])
 	{
 		DataTable<T> TriangleCoords = ExtractCoords(FnTable, TableIndex);
-		double max = Var[3].GetMax();
-		double delta = Var[3].GetMax() - Var[3].GetMin();
-		float r, g, b, r1, g1, b1, r2, g2, b2;
+		double delta = Var[3].GetMax();// -Var[3].GetMin();
 		double avg = (TriangleCoords.GetRowAt(0).at(2) + TriangleCoords.GetRowAt(1).at(2) + TriangleCoords.GetRowAt(2).at(2)) / 3;
-
-		RainbowColor(r, g, b, TriangleCoords.GetRowAt(0).at(2)/ Var[3].GetMax());
-		RainbowColor(r1, g1, b1, TriangleCoords.GetRowAt(1).at(2)/ Var[3].GetMax());
-		RainbowColor(r2, g2, b2, TriangleCoords.GetRowAt(2).at(2)/ Var[3].GetMax());
-
+		FigColor.SetAndChangeColor(255 * avg / delta, 0, 200-200*avg/delta, 255);
 
 		DrawFig.DrawTriangle3D(
 			TriangleCoords.GetRowAt(0),
 			TriangleCoords.GetRowAt(1),
 			TriangleCoords.GetRowAt(2),
-			GL_TRIANGLES,r,g,b,r1,g1,b1,r2,g2,b2
+			GL_TRIANGLES
 		);
 	};
-	void RainbowColor(float &r, float &g, float &b, const double t)
-	{
-
-		if (t<0)
-		{
-			r = 0;
-			g = 0;
-			b = 1;
-		}
-		else if (1<t)
-		{
-			r = 1;
-			g = 0;
-			b = 0;
-		}
-		else if (t<0.25)
-		{
-			r = 0;
-			b = 1;
-			g = t / 0.25;
-		}
-		else if (t<0.5)
-		{
-			r = 0;
-			g = 1;
-			b = 1 - (t - 0.25) / 0.25;
-		}
-		else if (t<0.75)
-		{
-			r = (t - 0.5) / 0.25;
-			g = 1;
-			b = 0;
-		}
-		else
-		{
-			r = 1;
-			g = 1 - (t - 0.75) / 0.25;
-			b = 0;
-		}
-	}
 
 	void PlotLines(DataTable<T> &FnTable, std::vector<int> TableIndex)
 	{
@@ -133,19 +89,18 @@ class GraphRenderer
 
 		glEnable(GL_LINE_STIPPLE);
 		glLineStipple(1, 0xf0f0);
-		double deltaX = (Xmax - Xmin)/ NoOfDivisions;
-		double deltaY = (Ymax - Ymin)/ NoOfDivisions;
+
 		for (int i = 1; i < NoOfDivisions; i++)
 		{
 			glBegin(GL_LINES);
-			DrawFig.DrawLines3D(Xmin, Ymin+i*deltaY, Zmin, Xmax, Ymin + i*deltaY, Zmin, GL_LINES);
-			DrawFig.DrawLines3D(Xmin + i*deltaX, Ymin, Zmin, Xmin + i*deltaX, Ymax, Zmin, GL_LINES);
+			DrawFig.DrawLines3D(Xmin, Ymax*i / NoOfDivisions, Zmin, Xmax, Ymax*i / NoOfDivisions, Zmin, GL_LINES);
+			DrawFig.DrawLines3D(Xmax*i / NoOfDivisions, Ymin, Zmin, Xmax*i / NoOfDivisions, Ymax, Zmin, GL_LINES);
 			glEnd();
 		}
 		glDisable(GL_LINE_STIPPLE);
 	};
 
-	void PlotFunction(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, int TimeIndex, int NoOfVariables, Variable<T> Var[])
+	void PlotFunction(DataTable<T> &FnTable, TimeCurve<T> &FnTimeCurve, int TimeIndex, int NoOfVariables, Variable<T> Var[])
 	{
 		int NoOfRows = FnTimeCurve.GetNoOfSurfaceRowsForTimeIndex(TimeIndex);
 
@@ -178,27 +133,24 @@ class GraphRenderer
 		sprintf(CoordinateMarkings, "%lf Z_axis\0", Zmax);
 		DrawFig.WriteMsgAtXYZ(Xmin, Ymin, Zmax, CoordinateMarkings);
 
-		double deltaX = (Xmax - Xmin) / NoOfDivisions;
-		double deltaY = (Ymax - Ymin) / NoOfDivisions;
-		double deltaZ = (Zmax - Zmin) / NoOfDivisions;
 
 		for (int i = 1; i < NoOfDivisions; i++)
 		{
-			sprintf(CoordinateMarkings, "%lf \0", Xmin + i*deltaX);
-			DrawFig.WriteMsgAtXYZ(Xmin + i*deltaX, Ymin, Zmin, CoordinateMarkings);
+			sprintf(CoordinateMarkings, "%lf \0", Xmax*i / NoOfDivisions);
+			DrawFig.WriteMsgAtXYZ(Xmax*i / NoOfDivisions, Ymin, Zmin, CoordinateMarkings);
 
-			sprintf(CoordinateMarkings, "%lf \0", Ymin + i*deltaY);
-			DrawFig.WriteMsgAtXYZ(Xmin, Ymin + i*deltaY, Zmin, CoordinateMarkings);
+			sprintf(CoordinateMarkings, "%lf \0", Ymax*i / NoOfDivisions);
+			DrawFig.WriteMsgAtXYZ(Xmin, Ymax*i / NoOfDivisions, Zmin, CoordinateMarkings);
 
-			sprintf(CoordinateMarkings, "%lf \0", Zmin + i*deltaZ);
-			DrawFig.WriteMsgAtXYZ(Xmin, Ymin, Zmin + i*deltaZ, CoordinateMarkings);
+			sprintf(CoordinateMarkings, "%lf \0", Zmax*i / NoOfDivisions);
+			DrawFig.WriteMsgAtXYZ(Xmin, Ymin, Zmax*i / NoOfDivisions, CoordinateMarkings);
 		}
 
 		if (DrawMesh)
 			GenerateXYMesh(Xmin, Ymin, Zmin, Xmax, Ymax, Zmax, NoOfDivisions);
 	};
 
-	void GenerateTimeIndexDisplayList(GLuint &DisplayLists, int TimeIndex, DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, Variable<T> Var[], int NoOfVariables, int NoOfDivisionsForAxis, bool DrawMeshOnXYPlane)
+	void GenerateTimeIndexDisplayList(GLuint &DisplayLists, int TimeIndex, DataTable<T> &FnTable, TimeCurve<T> &FnTimeCurve, Variable<T> Var[], int NoOfVariables, int NoOfDivisionsForAxis, bool DrawMeshOnXYPlane)
 	{
 		printf("\nGenerating List %d of %d", TimeIndex + 1, FnTimeCurve.GetNoOfTimeSteps());
 		glNewList(DisplayLists + TimeIndex, GL_COMPILE);
@@ -209,7 +161,7 @@ class GraphRenderer
 		printf("\nGenerated List %d of %d", TimeIndex + 1, FnTimeCurve.GetNoOfTimeSteps());
 	};
 
-	void GenerateGLLists(GLuint &DisplayLists, DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, Variable<T> Var[], int NoOfVariables, int NoOfDivisionsForAxis, bool DrawMeshOnXYPlane)
+	void GenerateGLLists(GLuint &DisplayLists, DataTable<T> &FnTable, TimeCurve<T> &FnTimeCurve, Variable<T> Var[], int NoOfVariables, int NoOfDivisionsForAxis, bool DrawMeshOnXYPlane)
 	{
 //		std::vector<std::thread> DisplayListThread;
 //		for (int TimeIndex = 0; TimeIndex < FnTimeCurve.GetNoOfTimeSteps(); TimeIndex++)
@@ -232,32 +184,41 @@ class GraphRenderer
 
 public:
 
-	void PlotGraph(DataTable<T> &FnTable, TimeCurve<T> FnTimeCurve, Variable<T> Var[],int NoOfVariables, int NoOfDivisionsForAxis = 10, bool DrawMeshOnXYPlane = true, double Speed = 1)
+	GLuint * PlotGraphInitialize(DataTable<T> &FnTable, TimeCurve<T> &FnTimeCurve, Variable<T> Var[], int NoOfVariables, int NoOfDivisionsForAxis = 10, bool DrawMeshOnXYPlane = true)
 	{
-		Camera Cam;
-		if ( !FsCheckWindowOpen() )
-			FsOpenWindow(0, 0, 800, 600, 1);
-
-		glEnable(GL_DEPTH_TEST);
-		glShadeModel(GL_SMOOTH);
-
-		Cam.SetPosXYZ(Var[1].GetMin(), Var[2].GetMin(), Var[3].GetMax() + 10);
-
-		GLuint DisplayLists = glGenLists(FnTimeCurve.GetNoOfTimeSteps());
+		static GLuint DisplayLists = glGenLists(FnTimeCurve.GetNoOfTimeSteps());
 		GenerateGLLists(DisplayLists, FnTable, FnTimeCurve, Var, NoOfVariables, NoOfDivisionsForAxis, DrawMeshOnXYPlane);
+		//double Counter = 0;
 
-		double Counter = 0;
+		return &DisplayLists;
+	}
 
-		for (int TimeIndex = 0, key = FsInkey(); key != FSKEY_ESC; Counter += Speed)
+	void PlotGraph(GLuint &DisplayLists, TimeCurve<T> &FnTimeCurve, int key)
+	{
+//		Camera Cam;
+//		if ( !FsCheckWindowOpen() )
+//			FsOpenWindow(0, 0, 800, 600, 1);
+
+//		glEnable(GL_DEPTH_TEST);
+//		Cam.SetPosXYZ(Var[1].GetMin(), Var[2].GetMin(), Var[3].GetMax() + 10);
+//		Cam.SetEulerAngles(0,-70,0);
+
+//		GLuint DisplayLists = glGenLists(FnTimeCurve.GetNoOfTimeSteps());
+//		GenerateGLLists(DisplayLists, FnTable, FnTimeCurve, Var, NoOfVariables, NoOfDivisionsForAxis, DrawMeshOnXYPlane);
+
+//		double Counter = 0;
+		static int TimeIndex = 0;
+		static double Counter = 0;
+		static double Speed = 1;
+		Counter += Speed;
+		//for (int TimeIndex = 0, key = FsInkey(); key != FSKEY_ESC; Counter += Speed)
 		{
-			FsPollDevice();
-			key = FsInkey();
-
-			Cam.ChangeCameraWithInput(key);
-			Cam.SetUpCameraProjection();
-			Cam.SetUpCameraTransformation();
+			//FsPollDevice();
+//			Cam.ChangeCameraWithInput(key);
+//			Cam.SetUpCameraProjection();
+//			Cam.SetUpCameraTransformation();
 			glCallList(DisplayLists + TimeIndex);
-			FsSwapBuffers();
+			//FsSwapBuffers();
 			
 			if (Counter >= 100)
 			{
@@ -271,8 +232,9 @@ public:
 
 			if (key == FSKEY_DOWN)
 				Speed--;
-
-			FsSleep(10);
+			//if (key == FSKEY_ESC)
+				//break;
+			//FsSleep(10);
 		};
 	};
 

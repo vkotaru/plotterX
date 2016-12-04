@@ -3,8 +3,8 @@
 
 UIInput::UIInput()
 {
-	state = NOT_ACTIVE;
-	InputEntered = NO;
+	state = 0; key = 0;
+	InputEntered = 0;
 	x = 0; y = 0; width = 0; height = 0;
 	CharacterSize[0] = 8;
 	CharacterSize[1] = 12;
@@ -13,7 +13,7 @@ UIInput::UIInput()
 UIInput::~UIInput()
 {
 	CleanUp();
-	state = 0;
+	state = 0; key = 0;
 	InputEntered = 0;
 	x = 0; y = 0; width = 0; height = 0;
 	NoOfCharsInaLine = 0; MaxNoOfLines = 0;
@@ -21,6 +21,10 @@ UIInput::~UIInput()
 void UIInput::CleanUp(void)
 {
 
+}
+void UIInput::SetKey(int k)
+{
+	key = k;
 }
 
 void UIInput::SetState(const int s)
@@ -88,8 +92,8 @@ const std::string UIInput::GetUIInput() const
 
 bool UIInput::Input(std::string& str_)
 {
-		FsPollDevice();
-		auto key=FsInkey();
+		//FsPollDevice();
+		//auto key=FsInkey();
 		if(key==FSKEY_ENTER)
 		{
 			return true;
@@ -166,4 +170,10 @@ void UIInput::Display(MouseInputs m, const char msgtitle[])
 		//DisplayTextMsgAt(x + 10, y + 16 + 16, str.GetPointer(),5, GENERAL_TEXT_FONT_COLOR_R, GENERAL_TEXT_FONT_COLOR_G, GENERAL_TEXT_FONT_COLOR_B);
 	}
 
+}
+
+void UIInput::GetCharArrayOfString(char *ChrArray)
+{
+	str.copy(ChrArray, 100);
+	ChrArray[str.length()] = 0;
 }

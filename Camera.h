@@ -6,6 +6,7 @@
 
 class Camera
 {
+	const double YsPi = 3.1415927;
 	double PosX, PosY, PosZ;
 	double EulerAngH, EulerAngP, EulerAngB;
 
@@ -14,16 +15,16 @@ class Camera
 public:
 	Camera()
 	{
-		PosX = 5;
-		PosY = 5;
-		PosZ = 5;
+		PosX = 0;
+		PosY = 0;
+		PosZ = 0;
 		EulerAngH = 0;
-		EulerAngP = -70;
+		EulerAngP = 0;
 		EulerAngB = 0;
 
-		fov = 60; 
+		fov = 30;// YsPi / 6.0;
 		nearZ = 0.1;
-		farZ = 100.0;
+		farZ = 1000.0;
 	};
 
 	void SetPosX(double X)

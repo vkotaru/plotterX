@@ -21,9 +21,9 @@ public:
 	const double GetMin() const;
 	const double GetMax() const;
 	const double GetDelta() const;
-	const double GetNoOfSets() const;
+	const int GetNoOfSteps() const;
 
-	void ConvertVariablesToValeus();
+	void ConvertVariablesToValues();
 	double Convert2Double(std::string str_);
 
 };

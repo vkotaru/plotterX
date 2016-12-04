@@ -6,7 +6,6 @@
 class UIIcons :public UIInput
 {
 private:
-	int state;
 public:
 	UIIcons()
 	{

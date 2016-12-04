@@ -14,7 +14,7 @@
 
 /************ VARIABLES ******************/
 #define NO_OF_INDEPENDENT_VARIABLES 3
-const char VARIABLES_TEXT[] = "xytzl";
+const char VARIABLES_TEXT[] = "txyzl";
 
 /********** UI WINDOW FEATURES ***********/
 #define ASPECT_RATIO_16_9 1.77777777778

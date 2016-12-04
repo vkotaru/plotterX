@@ -27,7 +27,8 @@ public:
 	UIInput();
 	~UIInput();
 	void CleanUp(void);
-
+	int key;
+	void SetKey(int k);
 	void SetState(const int s);
 	void SetLocation(const double x, const double y, const double wid, const double hei);
 	void SetInputEntered(const int set);
@@ -39,6 +40,7 @@ public:
 	const double GetHeight() const;
 	const int IsInputEntered() const;
 	const int GetNoOfCharsInaLine() const;
+	void GetCharArrayOfString(char *ChrArray);
 
 	void SetCaption(const char c[]);
 	void SetString(const char s[]);

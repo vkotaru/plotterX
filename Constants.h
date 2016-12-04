@@ -8,5 +8,7 @@
 #define Error_Variable_No_Of_Steps_Already_Set 4
 #define Error_Variable_Delta_Already_Set 5
 
+// 
+#define NO_OF_VARIABLES 4
 
 #endif

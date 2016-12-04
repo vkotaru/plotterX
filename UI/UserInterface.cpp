@@ -25,9 +25,7 @@ void UserInterface::Initialize()
 	OpenWindow(ASPECT_RATIO_4_3);
 
 	int terminate = 0;
-	camera.y = 30.0;
-	camera.nearZ = 1.0;
-	camera.farZ = 1000.0;
+	cam.SetPosY(30.0);
 }
 
 void UserInterface::AutoScaleWindow()
@@ -36,9 +34,12 @@ void UserInterface::AutoScaleWindow()
 	FsGetWindowSize(wid,hei);
 	SetWidth(wid);
 	SetHeight(hei);
-
 	DisplayGraphicsWindow();
-	
+
+}
+
+void UserInterface::DisplayInterface()
+{
 	SetUp2DEnvironment();
 	DisplayTitleWindow();
 	DisplayInputWindow();
@@ -46,8 +47,16 @@ void UserInterface::AutoScaleWindow()
 	DisplayFooterWindow();
 
 	//DrawTextDesiredSize(GetWidth()*0.25, GetHeight() / 2, 16, 16, "HI");
-	DisplayTextMsgAt(GetWidth()*0.45, GetHeight()*0.5, "WELCOME", 14, 255, 0, 0);
+	//DisplayTextMsgAt(GetWidth()*0.45, GetHeight()*0.5, "WELCOME", 14, 255, 0, 0);
+}
 
+void UserInterface::DisplayGraphics()
+{
+	DisplayGraphicsWindow();
+	// 3D drawing from here
+	DrawGroundLattice();
+
+	SetUp2DEnvironment();
 }
 
 /******************  SETTING UP 2D AND 3D ******************************/
@@ -65,10 +74,10 @@ void UserInterface::SetUp2DEnvironment()
 }
 
 /********************** POLLING ****************************************/
-void UserInterface::Polling()
+int UserInterface::Polling()
 {
 	FsPollDevice();
-
+	key = FsInkey();
 	if (mouse.LEFT_BUTTON_CLICK == ACTIVE &&
 		mouse.mx >= EquationInput.GetX() &&
 		mouse.mx <= (EquationInput.GetX() + EquationInput.GetWidth()) &&
@@ -136,43 +145,7 @@ void UserInterface::Polling()
 		DeActivateAllInputWindows();
 		AnyWindowActivated = NO;
 	}
-	//if (AnyWindowActivated == NO)
-	//{
-	//	printf("IMHERE\n");
-	//	if (0 != FsGetKeyState(FSKEY_LEFT))
-	//	{
-	//		camera.h += YsPi / 240.0;
-	//	}
-	//	else if (0 != FsGetKeyState(FSKEY_RIGHT))
-	//	{
-	//		camera.h -= YsPi / 240.0;
-	//	}
-	//	else if (0 != FsGetKeyState(FSKEY_UP))
-	//	{
-	//		camera.p += YsPi / 240.0;
-	//	}
-	//	else if (0 != FsGetKeyState(FSKEY_DOWN))
-	//	{
-	//		camera.p -= YsPi / 240.0;
-	//	}
-	//	else if (0 != FsGetKeyState(FSKEY_F))
-	//	{
-	//		double vx, vy, vz;
-	//		camera.GetForwardVector(vx, vy, vz);
-	//		camera.x += vx / 4.0;
-	//		camera.y += vy / 4.0;
-	//		camera.z += vz / 4.0;
-	//	}
-	//	else if (0 != FsGetKeyState(FSKEY_B))
-	//	{
-	//		double vx, vy, vz;
-	//		camera.GetForwardVector(vx, vy, vz);
-	//		camera.x -= vx / 4.0;
-	//		camera.y -= vy / 4.0;
-	//		camera.z -= vz / 4.0;
-	//	}
-	//}
-
+	return key;
 }
 
 void UserInterface::DeActivateAllInputWindows()
@@ -182,6 +155,39 @@ void UserInterface::DeActivateAllInputWindows()
 	{
 		VariablesInput[iter].SetState(NOT_ACTIVE);
 	}
+}
+
+/************************* DATA TRANSFER *******************************/
+void UserInterface::ValidateInput()
+{
+	char TempChar[100];
+	EquationInput.GetCharArrayOfString(TempChar);
+	printf("%s\n", TempChar);
+
+	for (int i = 0; i < NO_OF_INDEPENDENT_VARIABLES; ++i)
+	{
+		VariablesInput[i].ConvertVariablesToValues();
+		printf("%f %f %d\n ",VariablesInput[i].GetMin(), 
+							 VariablesInput[i].GetMax(),
+							VariablesInput[i].GetNoOfSteps());
+	}
+	printf("____________________________________________\n");
+}
+
+void UserInterface::TransferDataToBackEnd(Variable <double> var[], Parser& FnParser, char* InputEq)
+{
+	EquationInput.GetCharArrayOfString(InputEq);
+	//printf("%s\n", InputEq);
+	FnParser.SetInfix(InputEq);
+
+	for (int i = 0; i < NO_OF_INDEPENDENT_VARIABLES; ++i)
+	{
+		VariablesInput[i].ConvertVariablesToValues();
+		var[i].SetMin(VariablesInput[i].GetMin());
+		var[i].SetMax(VariablesInput[i].GetMax());
+		var[i].SetNoOfSteps(VariablesInput[i].GetNoOfSteps());
+	}
+
 }
 
 /************************* WINDOWS *************************************/
@@ -204,6 +210,7 @@ void UserInterface::DisplayEquationWindow()
 	DisplayEquationWindowBackground();
 	// Equation Window
 	EquationInput.Display(mouse, EQUATION_PROMPT);
+	EquationInput.SetKey(key);
 }
 
 void UserInterface::DisplayVariablesWindow()
@@ -221,6 +228,7 @@ void UserInterface::DisplayVariablesWindow()
 		MsgPrompt[PromptMsg.length() + 3]=0;
 		// Prompt Message --> LOOK FOR A SIMPLE PROCESS 
 		VariablesInput[i].Display(MsgPrompt);
+		VariablesInput[i].SetKey(key);
 	}
 }
 
@@ -256,15 +264,28 @@ void UserInterface::DisplayGraphicsWindow()
 
 	// Set up 3D drawing
 	glViewport(GraphicsX, GraphicsY, GraphicsWidth, GraphicsHeight);
-	camera.SetUpCameraProjection();
-	camera.SetUpCameraTransformation();
+	cam.SetUpCameraProjection();
+	cam.SetUpCameraTransformation();
 
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_POLYGON_OFFSET_FILL);
-	glPolygonOffset(1, 1);
+	//glEnable(GL_POLYGON_OFFSET_FILL);
+	//glPolygonOffset(1, 1);
 
-	// 3D drawing from here
-	camera.DrawGroundLattice();
+}
 
-	SetUp2DEnvironment();
+void UserInterface::DrawGroundLattice(void)
+{
+	glColor3ub(0, 0, 255);
+	glBegin(GL_LINES);
+
+	for (int i = -1000; i <= 1000; i += 20)
+	{
+		glVertex3i(i, 0, -1000);
+		glVertex3i(i, 0, +1000);
+
+		glVertex3i(-1000, 0, i);
+		glVertex3i(+1000, 0, i);
+	}
+
+	glEnd();
 }
