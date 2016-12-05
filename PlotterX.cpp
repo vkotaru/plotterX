@@ -13,7 +13,7 @@ PlotterX::~PlotterX()
 
 int PlotterX::Run()
 {
-	FsPollDevice();
+//	FsPollDevice();
 
 	int lb, mb, rb, mx, my;
 	

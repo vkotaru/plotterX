@@ -1,4 +1,5 @@
 #include "UIInput.h"
+#include "fssimplewindow.h"
 
 UIInput::UIInput()
 {
@@ -107,7 +108,8 @@ bool UIInput::Input(std::string& str_)
 			if(str_.length()>0)	str_.pop_back();
 		}
 
-		auto c=FsInkeyChar();
+		auto c = FsInkeyChar();
+		while (FsInkeyChar() != NULL);
 		if(' '<=c)
 		{
 			//str.Add(c);

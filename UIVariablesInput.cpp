@@ -63,7 +63,8 @@ bool UIVariablesInput::Input(std::string & str_, int CursorLoc)
 	{
 		CursorLocation = MAX(MIN(CursorLocation - 1, (NO_OF_INDEPENDENT_VARIABLE_PARAMETERS - 1)), 0);
 	}
-	auto c =FsInkeyChar();
+	auto c = FsInkeyChar();
+	while (FsInkeyChar() != NULL);
 	if (' ' <= c)
 	{
 		//str.Add(c);
