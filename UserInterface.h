@@ -2,9 +2,9 @@
 #define __USER_INTERFACE_H__
 
 #include "UIUtilities.h"
-#include "../Camera.h"
-#include "../Parser.h"
-#include "../Variable.h"
+#include "Camera.h"
+#include "Parser.h"
+#include "Variable.h"
 
 class UserInterface : public UIUtilities
 {

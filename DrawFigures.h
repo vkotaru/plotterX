@@ -5,9 +5,11 @@
 #include "ysglfontdata.h"
 #include "Colors.h"
 #include "Constants.h"
+
 template <class T>
 class DrawFigures
 {
+	Color FigColor;
 public:
 
 	double ConvertAngleDegreetoRandian(double degree)

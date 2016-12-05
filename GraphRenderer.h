@@ -5,7 +5,7 @@
 #include <thread>
 #include "fssimplewindow.h"
 
-#include "./UI/UserInterface.h"
+#include "UserInterface.h"
 
 template <class T>
 class GraphRenderer
@@ -152,6 +152,7 @@ class GraphRenderer
 		printf("\nGenerating List %d of %d", TimeIndex + 1, FnTimeCurve.GetNoOfTimeSteps());
 		glNewList(DisplayLists + TimeIndex, GL_COMPILE);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glShadeModel(GL_SMOOTH);
 		PlotFunction(FnTable, FnTimeCurve, TimeIndex, NoOfVariables,Var);
 		DrawAxis(Var[1].GetMin(), Var[2].GetMin(), Var[3].GetMin(), Var[1].GetMax(), Var[2].GetMax(), Var[3].GetMax(), NoOfDivisionsForAxis, DrawMeshOnXYPlane);
 		glEndList();

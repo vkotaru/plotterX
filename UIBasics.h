@@ -7,9 +7,6 @@
 #include <math.h>
 #include <vector>
 
-#include "fssimplewindow.h"
-#include "ysglfontdata.h"
-
 #include "DrawFigures.h"
 #include "UIConstants.h"
 

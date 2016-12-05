@@ -116,7 +116,7 @@ const char VARIABLES_PROMPT[] = "Parameters for ";
 
 /***************** LINE FEATURES ****************/
 
-#define LINESPACE 16
+#define LINESPACE 10
 #define HEADERSPACE 16
 #define LEFTSPACE 10
 #define RIGHTSPACE 10

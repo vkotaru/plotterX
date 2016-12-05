@@ -10,7 +10,7 @@
 #include "FuncEval.h"
 #include "DataTable.h"
 
-#include "./UI/UserInterface.h"
+#include "UserInterface.h"
 
 class PlotterX
 {

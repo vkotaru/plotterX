@@ -1,7 +1,4 @@
-
 #include "UserInterface.h"
-#include "CameraTmp.h"
-
 
 UserInterface::UserInterface()
 {

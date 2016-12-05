@@ -1,4 +1,3 @@
-
 #include "UIInput.h"
 
 UIInput::UIInput()

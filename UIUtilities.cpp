@@ -1,5 +1,3 @@
-
-
 #include "UIUtilities.h"
 
 UIUtilities::UIUtilities()

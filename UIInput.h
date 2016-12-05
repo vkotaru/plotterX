@@ -6,7 +6,6 @@
 #include <string.h>
 #include <math.h>
 
-#include "TextString.h"
 #include "UIBasics.h"
 #include "MouseInputs.h"
 

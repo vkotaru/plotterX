@@ -1,4 +1,3 @@
-
 #include "UIVariablesInput.h"
 
 UIVariablesInput::UIVariablesInput()
@@ -111,27 +110,27 @@ void UIVariablesInput::DisplayInput(std::string str_, int CursorLoc)
 void UIVariablesInput::Display(const char msgtitle[])
 {
 	DisplayTextMsgAt(GetX() + LEFTSPACE, GetY() + HEADERSPACE,
-						msgtitle, 5,
+						msgtitle, 2,
 						GENERAL_TEXT_FONT_COLOR_R,
 						GENERAL_TEXT_FONT_COLOR_G,
 						GENERAL_TEXT_FONT_COLOR_B);
 	DisplayTextMsgAt(GetX() + LEFTSPACE, GetY() + HEADERSPACE + LINESPACE,
-						"Enter Min>", 5,
+						"Enter Min>", 2,
 						GENERAL_TEXT_FONT_COLOR_R,
 						GENERAL_TEXT_FONT_COLOR_G,
 						GENERAL_TEXT_FONT_COLOR_B);
 	DisplayTextMsgAt(GetX() + LEFTSPACE, GetY() + HEADERSPACE + 3*LINESPACE,
-						"Enter Max>", 5,
+						"Enter Max>", 2,
 						GENERAL_TEXT_FONT_COLOR_R,
 						GENERAL_TEXT_FONT_COLOR_G,
 						GENERAL_TEXT_FONT_COLOR_B);
 	DisplayTextMsgAt(GetX() + LEFTSPACE, GetY() + HEADERSPACE + 5*LINESPACE,
-						"Enter Delta>", 5,
+						"Enter Delta>", 2,
 						GENERAL_TEXT_FONT_COLOR_R,
 						GENERAL_TEXT_FONT_COLOR_G,
 						GENERAL_TEXT_FONT_COLOR_B);
 	DisplayTextMsgAt(GetX() + LEFTSPACE, GetY() + HEADERSPACE + 7 * LINESPACE,
-						"No. of Steps>", 5,
+						"No. of Steps>", 2,
 						GENERAL_TEXT_FONT_COLOR_R,
 						GENERAL_TEXT_FONT_COLOR_G,
 						GENERAL_TEXT_FONT_COLOR_B);
