@@ -58,15 +58,12 @@ class GraphRenderer
 	void PlotTriangularFace(DataTable<T> &FnTable, std::vector<int> TableIndex, Variable<T> Var[])
 	{
 		DataTable<T> TriangleCoords = ExtractCoords(FnTable, TableIndex);
-		double delta = Var[3].GetMax();// -Var[3].GetMin();
-		double avg = (TriangleCoords.GetRowAt(0).at(2) + TriangleCoords.GetRowAt(1).at(2) + TriangleCoords.GetRowAt(2).at(2)) / 3;
-		FigColor.SetAndChangeColor(255 * avg / delta, 0, 200-200*avg/delta, 255);
 
 		DrawFig.DrawTriangle3D(
 			TriangleCoords.GetRowAt(0),
 			TriangleCoords.GetRowAt(1),
 			TriangleCoords.GetRowAt(2),
-			GL_TRIANGLES
+			true, Var[3].GetMin(), Var[3].GetMax()
 		);
 	};
 

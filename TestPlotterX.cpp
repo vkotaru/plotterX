@@ -50,7 +50,6 @@ int main()
 	//	Error.CatchError(ErrorCode);
 	//}
 
-	while (1)
 	{
 
 		PlotterX plotterX;

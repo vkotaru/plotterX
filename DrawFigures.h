@@ -3,9 +3,8 @@
 
 #include "fssimplewindow.h"
 #include "ysglfontdata.h"
-
-#define PI 3.1415927
-
+#include "Colors.h"
+#include "Constants.h"
 template <class T>
 class DrawFigures
 {
@@ -60,21 +59,30 @@ public:
 	void DrawTriangle3D(	GLdouble X1, GLdouble Y1, GLdouble Z1,
 							GLdouble X2, GLdouble Y2, GLdouble Z2,
 							GLdouble X3, GLdouble Y3, GLdouble Z3,
-							int FillType
+							bool ColorGrade = false, GLdouble Min = 0, GLdouble Max = 1
 						)
 	{
+
+		FigColor.ColorGrade((Z1 - Min) / (Max - Min));
 		glVertex3d(X1, -Y1, Z1);
+
+		FigColor.ColorGrade((Z2 - Min) / (Max - Min));
 		glVertex3d(X2, -Y2, Z2);
+		
+		FigColor.ColorGrade((Z3 - Min) / (Max - Min));
 		glVertex3d(X3, -Y3, Z3);
 	};
 
-	void DrawTriangle3D(std::vector<T> Coord1, std::vector<T> Coord2, std::vector<T> Coord3, int FillType)
+	void DrawTriangle3D(	std::vector<T> Coord1, std::vector<T> Coord2, std::vector<T> Coord3,
+							bool ColorGrade = false, GLdouble Min = 0, GLdouble Max = 1
+						)
 	{
-		DrawTriangle3D(Coord1.at(0), Coord1.at(1), Coord1.at(2),
-			Coord2.at(0), Coord2.at(1), Coord2.at(2),
-			Coord3.at(0), Coord3.at(1), Coord3.at(2),
-			FillType
-		);
+			
+		DrawTriangle3D(	Coord1.at(0), Coord1.at(1), Coord1.at(2),
+						Coord2.at(0), Coord2.at(1), Coord2.at(2),
+						Coord3.at(0), Coord3.at(1), Coord3.at(2),
+						ColorGrade, Min, Max
+					);
 	};
 
 	void WriteMsgAtXYZ(GLdouble X, GLdouble Y, GLdouble Z, const char *Msg)
