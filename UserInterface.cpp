@@ -174,7 +174,8 @@ void UserInterface::ValidateInput()
 void UserInterface::TransferDataToBackEnd(Variable <double> var[], Parser& FnParser, char* InputEq)
 {
 	EquationInput.GetCharArrayOfString(InputEq);
-	//printf("%s\n", InputEq);
+	printf("%s\n", InputEq);
+	FnParser.SetInfix(InputEq);
 	FnParser.SetInfix(InputEq);
 
 	for (int i = 0; i < NO_OF_INDEPENDENT_VARIABLES; ++i)

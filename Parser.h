@@ -53,7 +53,7 @@ public:
 
 	void SetInfix(char *FunctionString)
 	{
-		CleanUp();
+		//CleanUp();
 		infix = FunctionString;
 	};
 

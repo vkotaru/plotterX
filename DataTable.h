@@ -22,6 +22,12 @@ public:
 		NoOfVariables = 0;
 	}
 
+	void CleanDataTable()
+	{
+		NoOfVariables = 0;
+		Data.clear();
+	}
+
 	void SetNoOfVariables(const int NoOfVar)
 	{
 		if (NoOfVar <= 0)
@@ -70,20 +76,5 @@ public:
 		std::vector<T> row = GetRowAt(RowIndex);
 		return row[ColumnIndex];	
 	}
-/*
-	void SetDataVector(std::vector< std::vector<T> > From)
-	{
-		Data = From;
-	}
-
-	const DataTable<T> ExtractDataFromTable(const int from, const int to)
-	{
-		DataTable<T> ExtractedDataTable;
-		std::vector< std::vector<T> > ExtractedVector;
-		ExtractedVector.assign(Data.begin()+from,Data.begin()+to);
-		SetDataVector(ExtractedVector);
-		return ExtractedDataTable;	
-	}
-*/
 };
 #endif

@@ -62,5 +62,11 @@ public:
 
 		return CurrSurface.GetNoOfSurfaceRows();
 	}
+
+	void CleanUpTimeCurve()
+	{
+		NoOfTimeSteps = 0;
+		TimeSurfaces.clear();
+	}
 };
 #endif

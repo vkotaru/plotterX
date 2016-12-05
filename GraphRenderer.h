@@ -182,9 +182,9 @@ class GraphRenderer
 
 public:
 
-	GLuint * PlotGraphInitialize(DataTable<T> &FnTable, TimeCurve<T> &FnTimeCurve, Variable<T> Var[], int NoOfVariables, int NoOfDivisionsForAxis = 10, bool DrawMeshOnXYPlane = true)
+	GLuint * PlotGraphInitialize(GLuint DisplayLists, DataTable<T> &FnTable, TimeCurve<T> &FnTimeCurve, Variable<T> Var[], int NoOfVariables, int NoOfDivisionsForAxis = 10, bool DrawMeshOnXYPlane = true)
 	{
-		static GLuint DisplayLists = glGenLists(FnTimeCurve.GetNoOfTimeSteps());
+//		static GLuint DisplayLists = glGenLists(FnTimeCurve.GetNoOfTimeSteps());
 		GenerateGLLists(DisplayLists, FnTable, FnTimeCurve, Var, NoOfVariables, NoOfDivisionsForAxis, DrawMeshOnXYPlane);
 		//double Counter = 0;
 

@@ -11,16 +11,6 @@ class Variable
 	int NoOfSteps;
 	bool IsAltered;
 
-public:
-	void InitializeToZero()
-	{
-		Min = 0;
-		Max = 0;
-		Delta = 0;
-		NoOfSteps = 0;
-		IsAltered = false;
-	}
-
 	void ComputeDelta() 
 	{
 		Delta = (GetMax() - GetMin()) /(GetNoOfSteps() - 1);
@@ -41,6 +31,15 @@ public:
 	{
 		InitializeToZero();
 	};
+
+	void InitializeToZero()
+	{
+		Min = 0;
+		Max = 0;
+		Delta = 0;
+		NoOfSteps = 0;
+		IsAltered = false;
+	}
 
 	bool IsVariableAltered()
 	{
@@ -81,8 +80,8 @@ public:
 
 	void SetDelta(const T delta)
 	{
-		if (GetNoOfSteps() != 0)
-			throw Error_Variable_No_Of_Steps_Already_Set;
+		//if (GetNoOfSteps() != 0)
+			//throw Error_Variable_No_Of_Steps_Already_Set;
 
 		Delta = delta;
 		ComputeNoOfSteps();
@@ -91,8 +90,8 @@ public:
 
 	void SetNoOfSteps(const int No_Of_Steps)
 	{
-		if (GetDelta() != T(0) )
-			throw Error_Variable_Delta_Already_Set;
+		//if (GetDelta() != T(0) )
+			//throw Error_Variable_Delta_Already_Set;
 
 		NoOfSteps = No_Of_Steps;
 		ComputeDelta();

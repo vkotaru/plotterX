@@ -52,17 +52,4 @@ public:
 
 	void DrawGroundLattice(void);
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
 #endif

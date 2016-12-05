@@ -24,7 +24,7 @@ private:
 	FunctionEval<double> FnEval;
 	TimeCurve<double> FnTimeCurve;
 	bool IsPlot;
-	GLuint *DisplayLists;
+	GLuint *DisplayLists = nullptr;
 
 	char InputEquation[100];
 	

@@ -34,17 +34,23 @@ int PlotterX::Run()
 		
 	}
 
-	if (UI.PlotIcon.GetState() && IsPlot == false )
+	if (UI.PlotIcon.GetState() )
 	{
+		UI.PlotIcon.SetState(false);
 		WelcomeScreen = 0;
 		UI.ValidateInput();
 		UI.TransferDataToBackEnd(var, FnParser, InputEquation);
+		var[3].InitializeToZero();
 		IsPlot = true;
 		TestFunctionalities();
 		UI.cam.SetPosXYZ(var[1].GetMin(), var[2].GetMin(), var[3].GetMax() + 10);
 		UI.cam.SetEulerAngles(0,-70,0);
-		DisplayLists = FnGraph.PlotGraphInitialize(FnTable, FnTimeCurve, var, NO_OF_VARIABLES, 10, true);
-		printf("DisplayList done");
+		delete DisplayLists;
+		DisplayLists = nullptr;
+		DisplayLists = new GLuint;
+		*DisplayLists = glGenLists(FnTimeCurve.GetNoOfTimeSteps());
+		FnGraph.PlotGraphInitialize(*DisplayLists, FnTable, FnTimeCurve, var, NO_OF_VARIABLES, 10, true);
+		printf("\nDisplayList Generated");
 	}
 
 	if (IsPlot == true)
@@ -65,26 +71,10 @@ int PlotterX::Run()
 
 void PlotterX::TestFunctionalities()
 {
+	FnTable.CleanDataTable();
+	FnTimeCurve.CleanUpTimeCurve();
 	const int NoOfVar = NO_OF_VARIABLES;
 	FnTable.SetNoOfVariables(NoOfVar);
-/*
-	var[0].SetMin(0.5);
-	var[0].SetMax(2);
-	var[0].SetNoOfSteps(6);
-
-	var[1].SetMin(0);
-	var[1].SetMax(4);
-	var[1].SetNoOfSteps(10);
-
-	var[2].SetMin(0);
-	var[2].SetMax(4);
-	var[2].SetNoOfSteps(10);
-
-	printf("\nSet the Variables");
-
-	FnParser.SetInfix("sin(t*x)+cos(y*t)");
-
-	printf("\nSet the Parser Function");*/
 
 	FnEval.Parser2DataTable(FnTable, NoOfVar);
 

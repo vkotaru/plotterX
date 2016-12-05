@@ -12,7 +12,6 @@
 class UIInput : public UIBasics
 {
 private:
-	//TextString caption,str;
 	std::string str;
 
 	// Location
