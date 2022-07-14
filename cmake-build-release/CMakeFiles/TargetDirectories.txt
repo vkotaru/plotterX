@@ -1,6 +1,0 @@
-/home/kotaru/Workspace/git/vkotaru/plotterX/cmake-build-release/CMakeFiles/plotterX.dir
-/home/kotaru/Workspace/git/vkotaru/plotterX/cmake-build-release/CMakeFiles/edit_cache.dir
-/home/kotaru/Workspace/git/vkotaru/plotterX/cmake-build-release/CMakeFiles/rebuild_cache.dir
-/home/kotaru/Workspace/git/vkotaru/plotterX/cmake-build-release/simplewindow/CMakeFiles/fssimplewindow.dir
-/home/kotaru/Workspace/git/vkotaru/plotterX/cmake-build-release/simplewindow/CMakeFiles/edit_cache.dir
-/home/kotaru/Workspace/git/vkotaru/plotterX/cmake-build-release/simplewindow/CMakeFiles/rebuild_cache.dir
