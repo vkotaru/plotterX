@@ -2,9 +2,9 @@
 #define __UI_INPUT_H__
 
 
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
+#include <cstdlib>
+#include <cmath>
+#include <string>
 
 #include "UIBasics.h"
 #include "MouseInputs.h"

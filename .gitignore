@@ -1,3 +1,9 @@
 *~
 archive/
+.idea/
+.vscode/
+
+cmake-build-release/
+build/
+
 

@@ -1,6 +1,8 @@
 #ifndef __MOUSE_INPUTS__
 #define __MOUSE_INPUTS__
 
+#include <cstdio>
+
 class MouseInputs
 {
 public:

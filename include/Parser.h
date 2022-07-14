@@ -6,7 +6,8 @@
 #include <stack>
 #include <limits>
 #include <string>
-#include <math.h>
+#include <cmath>
+#include <cstring>
 
 class Parser
 {

@@ -2,10 +2,11 @@
 #define __UI_BASICS_H__
 
 
-#include <stdlib.h>
-#include <time.h>
-#include <math.h>
+#include <cstdlib>
+#include <ctime>
+#include <cmath>
 #include <vector>
+#include <cstring>
 
 #include "DrawFigures.h"
 #include "UIConstants.h"
